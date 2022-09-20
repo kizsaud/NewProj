@@ -5,6 +5,7 @@ public class Date implements Comparable<Date>{
     private int year=0;
     private int month=0;
     private int day=0;
+    private boolean leap;
     //Create object with todays date.
 
     public Date(String D){
@@ -15,6 +16,17 @@ public class Date implements Comparable<Date>{
         int checkDay=Integer.parseInt(Values[0]);
         if (checkYear>1900 && checkYear<2023){
             year=checkYear;
+            if (year%4==0){
+                if (year%100==0){
+                    if (year%400==0){
+                        leap=true;
+                    }
+
+                }
+            }
+            else
+                leap=false;
+
 
         }
         if (checkMonth>0 && checkMonth<12){
@@ -23,6 +35,7 @@ public class Date implements Comparable<Date>{
         }
         if (checkDay>0 && checkDay<32){
             day=checkDay;
+
 
         }
 
@@ -61,6 +74,17 @@ public class Date implements Comparable<Date>{
     public int getDay() {
 
         return day;
+    }
+
+    public boolean isLeap() {
+    return leap;
+
+
+
+    }
+
+    public void setLeap(boolean leap) {
+        this.leap = leap;
     }
 
     @Override
