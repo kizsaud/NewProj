@@ -9,9 +9,25 @@ public class Date implements Comparable<Date>{
 
     public Date(String D){
         String[] Values=D.split("/");
-        year = Integer.parseInt(Values[0]);
-        month=Integer.parseInt(Values[1]);
-        day=Integer.parseInt(Values[2]);
+
+        int checkYear=Integer.parseInt(Values[0]);
+        int checkMonth = Integer.parseInt(Values[1]);
+        int checkDay=Integer.parseInt(Values[2]);
+        if (checkYear>1900 && checkYear<2023){
+            year=checkYear;
+
+        }
+        if (checkMonth>0 && checkMonth<12){
+            month=checkMonth;
+
+        }
+        if (checkDay>0 && checkDay<32){
+            day=checkDay;
+
+        }
+
+
+   
     }
     public Date(){
 
@@ -43,6 +59,7 @@ public class Date implements Comparable<Date>{
     }
 
     public int getDay() {
+    
         return day;
     }
 
