@@ -4,6 +4,7 @@ public class MemberDatabase {
 
     private int find(Member member)
     {
+        int NOT_FOUND = -1;
         for (int i = 0; i < mlist.length; i++)
         {
             if (mlist[i] == member)
@@ -11,7 +12,7 @@ public class MemberDatabase {
                 return i;
             }
         }
-        return -1;
+        return NOT_FOUND;
     }
 
     private void grow()
@@ -28,7 +29,10 @@ public class MemberDatabase {
     }
     public void print ()
     {
-
+        for(int i = 0; i < mlist.length; i++)
+        {
+            System.out.println(mlist[i]);
+        }
     } //print the array contents as is
     public void printByCounty()
     {
