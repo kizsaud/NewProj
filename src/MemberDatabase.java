@@ -31,7 +31,7 @@ public class MemberDatabase {
     {
         for(int i = 0; i < mlist.length; i++)
         {
-            System.out.println(mlist[i]);
+            System.out.println(mlist[i].toString());
         }
     } //print the array contents as is
     public void printByCounty()
