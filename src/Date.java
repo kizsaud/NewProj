@@ -11,7 +11,7 @@ public class Date implements Comparable<Date>{
     public Date(String D){
         String[] Values=D.split("/");
 
-        int checkYear=Integer.parseInt(Values[2]);
+        int redyear=Integer.parseInt(Values[2]);
         int checkMonth = Integer.parseInt(Values[1]);
         int checkDay=Integer.parseInt(Values[0]);
         if (checkYear>1900 && checkYear<2023){
