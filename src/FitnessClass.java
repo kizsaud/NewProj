@@ -1,3 +1,7 @@
 public class FitnessClass {
-    public enum Time{}
+    public enum Time{
+        Pilates,
+        Spinning,
+        Cardio
+    }
 }

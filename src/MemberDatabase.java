@@ -21,7 +21,11 @@ public class MemberDatabase {
     }
     public boolean add(Member member)
     {
-
+        Member newList[] = new Member[mlist.length + 1];
+        for(int i = 0; i < mlist.length; i++)
+        {
+            newList[i] = mlist[i];
+        }
     }
     public boolean remove(Member member)
     {

@@ -5,6 +5,22 @@ public class Member implements Comparable<Member>{
     private Date expire;
     private Location location;
 
+    public String getFname()
+    {
+        return fname;
+    }
+    public void setFname(String val)
+    {
+        fname = val;
+    }
+    public String getLname()
+    {
+        return lname;
+    }
+    public void setLname(String val)
+    {
+        lname = val;
+    }
     @Override
     public String toString()
     {
