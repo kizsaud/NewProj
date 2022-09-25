@@ -42,7 +42,17 @@ public class MemberDatabase {
 
     } //sort by county and then zipcode
     public void printByExpirationDate() {
+        Member [] newList = new Member[mlist.length];
+        for(int i = 0; i < mlist.length; i++){
+            newList[i] = mlist[i];
+        }
+        for(int i = 0; i < newList.length; i++) {
+            for(int j = i+1; j < newList.length; j++) {
+                if(newList[i].getExpire() > newList[j].getExpire()){
 
+                }
+            }
+        }
     } //sort by the expiration date
 
 
@@ -71,7 +81,7 @@ public class MemberDatabase {
             }
         }
         for(int i = 0; i < nameList.length; i++) {
-            System.out.println(mlist[i]);
+            System.out.println(nameList[i]);
         }
     } //sort by last name and then first name
 }

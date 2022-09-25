@@ -21,9 +21,14 @@ public class Member implements Comparable<Member>{
     {
         lname = val;
     }
+    public Date getExpire() {
+        return expire;
+    }
+    public void setExpire(Date d) {
+        expire = d;
+    }
     @Override
-    public String toString()
-    {
+    public String toString() {
         return fname + " " + lname + ", DOB: " + dob + "," + " Membership expires" + expire + ", Location: " + location;
     }
     @Override
