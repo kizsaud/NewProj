@@ -29,7 +29,18 @@ public class Member implements Comparable<Member>{
     @Override
     public boolean equals(Object obj)
     {
-
+        if(obj == this)
+        {
+            return true;
+        }
+        if(obj == null)
+        {
+            return false;
+        }
+        else
+        {
+            return false;
+        }
     }
     @Override
     public int compareTo(Member member)
