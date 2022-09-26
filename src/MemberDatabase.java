@@ -48,8 +48,23 @@ public class MemberDatabase {
         }
         for(int i = 0; i < newList.length; i++) {
             for(int j = i+1; j < newList.length; j++) {
-                if(newList[i].getExpire() > newList[j].getExpire()){
-
+                if(newList[i].getExpire().getYear() > newList[j].getExpire().getYear()){
+                    Member temp = newList[i];
+                    newList[i] = newList[j];
+                    newList[j] = temp;
+                }
+                else if(newList[i].getExpire().getYear() == newList[j].getExpire().getYear() &&
+                        newList[i].getExpire().getMonth() > newList[j].getExpire().getMonth()){
+                    Member temp = newList[i];
+                    newList[i] = newList[j];
+                    newList[j] = temp;
+                }
+                else if(newList[i].getExpire().getYear() == newList[j].getExpire().getYear() &&
+                        newList[i].getExpire().getMonth() == newList[j].getExpire().getMonth() &&
+                        newList[i].getExpire().getDay() > newList[j].getExpire().getDay()){
+                    Member temp = newList[i];
+                    newList[i] = newList[j];
+                    newList[j] = temp;
                 }
             }
         }
