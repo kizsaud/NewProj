@@ -13,26 +13,38 @@ public class MemberDatabase {
     }
 
     private void grow() {
-
+        Member[] newList = new Member[mlist.length+1];
+        for(int i = 0; i < newList.length; i++){
+            newList[i] = mlist[i];
+        }
+        mlist=newList;
     }
     public boolean add(Member member) {
         Member newList[] = new Member[mlist.length + 1];
         for(int i = 0; i < mlist.length; i++) {
             newList[i] = mlist[i];
         }
+        newList[newList.length-1] = member;
+        return true;
     }
     public boolean remove(Member member) {
-        Member [] newList = new Member[mlist.length-1];
-        for(int i = 0; i < mlist.length; i++) {
-            if(mlist[i] == member) {
-                i++;
-            }
-            else {
-                newList[i] = mlist[i];
+        for(int x = 0; x < mlist.length; x++){
+            if(mlist[x] == member) {
+                Member[] newList = new Member[mlist.length - 1];
+                for (int i = 0; i < mlist.length; i++) {
+                    if (mlist[i] == member) {
+                        i++;
+                    } else {
+                        newList[i] = mlist[i];
+                    }
+                }
+                mlist = newList;
+                return true;
             }
         }
-        mlist = newList;
+        return false;
     }
+
     public void print () {
         for(int i = 0; i < mlist.length; i++) {
             System.out.println(mlist[i].toString());
@@ -42,61 +54,53 @@ public class MemberDatabase {
 
     } //sort by county and then zipcode
     public void printByExpirationDate() {
-        Member [] newList = new Member[mlist.length];
-        for(int i = 0; i < mlist.length; i++){
-            newList[i] = mlist[i];
-        }
-        for(int i = 0; i < newList.length; i++) {
-            for(int j = i+1; j < newList.length; j++) {
-                if(newList[i].getExpire().getYear() > newList[j].getExpire().getYear()){
-                    Member temp = newList[i];
-                    newList[i] = newList[j];
-                    newList[j] = temp;
+        for(int i = 0; i< mlist.length; i++) {
+            for(int j = i+1; j < mlist.length; j++) {
+                if(mlist[i].getExpire().getYear() > mlist[j].getExpire().getYear()){
+                    Member temp = mlist[i];
+                    mlist[i] = mlist[j];
+                    mlist[j] = temp;
                 }
-                else if(newList[i].getExpire().getYear() == newList[j].getExpire().getYear() &&
-                        newList[i].getExpire().getMonth() > newList[j].getExpire().getMonth()){
-                    Member temp = newList[i];
-                    newList[i] = newList[j];
-                    newList[j] = temp;
+                else if(mlist[i].getExpire().getYear() == mlist[j].getExpire().getYear() &&
+                        mlist[i].getExpire().getMonth() > mlist[j].getExpire().getMonth()){
+                    Member temp = mlist[i];
+                    mlist[i] = mlist[j];
+                    mlist[j] = temp;
                 }
-                else if(newList[i].getExpire().getYear() == newList[j].getExpire().getYear() &&
-                        newList[i].getExpire().getMonth() == newList[j].getExpire().getMonth() &&
-                        newList[i].getExpire().getDay() > newList[j].getExpire().getDay()){
-                    Member temp = newList[i];
-                    newList[i] = newList[j];
-                    newList[j] = temp;
+                else if(mlist[i].getExpire().getYear() == mlist[j].getExpire().getYear() &&
+                        mlist[i].getExpire().getMonth() == mlist[j].getExpire().getMonth() &&
+                        mlist[i].getExpire().getDay() > mlist[j].getExpire().getDay()){
+                    Member temp = mlist[i];
+                    mlist[i] = mlist[j];
+                    mlist[j] = temp;
                 }
             }
         }
-    } //sort by the expiration date
-
-
-    public void printByName() {
-        Member temp;
-        Member [] nameList = new Member[mlist.length];
-        for(int i = 0; i < mlist.length; i++) {
-            nameList[i] = mlist[i];
+        for(int i = 0; i < mlist.length; i++){
+            System.out.println(mlist[i].toString());
         }
-        for(int i = 0; i < nameList.length; i++) {
-            for(int j = 1; j < nameList.length; j++) {
-                if(nameList[i].getLname().equals(nameList[j].getLname())) {
-                    if(nameList[i].getFname().compareTo(nameList[j].getFname()) > 0) {
-                        temp = nameList[i];
-                        nameList[i] = nameList[j];
-                        nameList[j] = temp;
+    }
+    public void printByName() {
+        for(int i = 0; i < mlist.length; i++) {
+            for(int j = 1; j < mlist.length; j++) {
+                if(mlist[i].getLname().equals(mlist[j].getLname())) {
+                    if(mlist[i].getFname().compareTo(mlist[j].getFname()) > 0) {
+                        Member temp = mlist[i];
+                        mlist[i] = mlist[j];
+                        mlist[j] = temp;
                     }
                 }
                 else {
-                    if(nameList[i].getLname().compareTo(nameList[j].getLname()) > 0) {
-                        temp = nameList[i];
-                        nameList[i] = nameList[j];
-                        nameList[j] = temp;
+                    if(mlist[i].getLname().compareTo(mlist[j].getLname()) > 0) {
+                        Member temp = mlist[i];
+                        mlist[i] = mlist[j];
+                        mlist[j] = temp;
                     }
                 }
             }
         }
-        for(int i = 0; i < nameList.length; i++) {
-            System.out.println(nameList[i]);
+        for(int i = 0; i < mlist.length; i++) {
+            System.out.println(mlist[i].toString());
         }
-    } //sort by last name and then first name
+    }
 }
