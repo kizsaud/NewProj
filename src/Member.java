@@ -21,6 +21,18 @@ public class Member implements Comparable<Member>{
     {
         lname = val;
     }
+    public Location getLocation(){
+        return location;
+    }
+    public void setLocation(Location l){
+        location = l;
+    }
+    public Date getDob(){
+        return dob;
+    }
+    public void setDob(Date d){
+        dob = d;
+    }
     public Date getExpire() {
         return expire;
     }
@@ -50,6 +62,14 @@ public class Member implements Comparable<Member>{
     @Override
     public int compareTo(Member member)
     {
+        if(this.fname.compareTo(member.getFname()) > 0){
+            return 1;
+        }
+        if(this.fname.compareTo(member.getFname()) < 0){
+            return -1;
+        }
+        if(this.fname.compareTo(member.getFname()) == 0){
 
+        }
     }
 }
