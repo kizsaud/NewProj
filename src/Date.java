@@ -96,6 +96,7 @@ public class Date implements Comparable<Date>{
   
     @Override
     public int compareTo(Date date) {
+        //This denotes the year you created, date.year denotes the current date
         int FirstYear= this.year;
         int SecondYear=date.year;
         int Winner=0;
