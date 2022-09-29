@@ -41,6 +41,10 @@ public class Member implements Comparable<Member>{
     }
     @Override
     public String toString() {
+        Date temp = new Date();
+        if(this.getExpire().compareTo(temp) == 1 || this.getExpire().compareTo(temp) == -1){
+            return fname + " " + lname + ", DOB: " + dob + "," + " Membership expired" + expire + ", Location: " + location;
+        }
         return fname + " " + lname + ", DOB: " + dob + "," + " Membership expires" + expire + ", Location: " + location;
     }
     @Override
@@ -65,17 +69,17 @@ public class Member implements Comparable<Member>{
         if(this.fname.compareTo(member.getFname()) > 0){
             return 1;
         }
-        if(this.fname.compareTo(member.getFname()) < 0){
+        else if(this.fname.compareTo(member.getFname()) < 0){
             return -1;
         }
-        if(this.fname.compareTo(member.getFname()) == 0){
+        else{
             if(this.lname.compareTo(member.getLname()) > 0){
                 return 1;
             }
-            if(this.lname.compareTo(member.getLname()) < 0){
+            else if(this.lname.compareTo(member.getLname()) < 0){
                 return -1;
             }
-            if(this.lname.compareTo(member.getLname()) == 0){
+            else{
                 if(this.dob.compareTo(member.getDob()) > 0){
                     return 1;
                 }

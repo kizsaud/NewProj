@@ -74,26 +74,13 @@ public class MemberDatabase {
     } //print the array contents as is
     public void printByCounty() {
         for(int i = 0; i < mlist.length; i++){
-            mlist[i].getLocation().getCounty();
+            mlist[i].getLocation().getCounty(mlist[i].getLocation());
         }
     } //sort by county and then zipcode
     public void printByExpirationDate() {
         for(int i = 0; i< mlist.length; i++) {
             for(int j = i+1; j < mlist.length; j++) {
-                if(mlist[i].getExpire().getYear() > mlist[j].getExpire().getYear()){
-                    Member temp = mlist[i];
-                    mlist[i] = mlist[j];
-                    mlist[j] = temp;
-                }
-                else if(mlist[i].getExpire().getYear() == mlist[j].getExpire().getYear() &&
-                        mlist[i].getExpire().getMonth() > mlist[j].getExpire().getMonth()){
-                    Member temp = mlist[i];
-                    mlist[i] = mlist[j];
-                    mlist[j] = temp;
-                }
-                else if(mlist[i].getExpire().getYear() == mlist[j].getExpire().getYear() &&
-                        mlist[i].getExpire().getMonth() == mlist[j].getExpire().getMonth() &&
-                        mlist[i].getExpire().getDay() > mlist[j].getExpire().getDay()){
+                if(mlist[i].getExpire().compareTo(mlist[j].getExpire()) == 0) {
                     Member temp = mlist[i];
                     mlist[i] = mlist[j];
                     mlist[j] = temp;
@@ -106,20 +93,11 @@ public class MemberDatabase {
     }
     public void printByName() {
         for(int i = 0; i < mlist.length; i++) {
-            for(int j = 1; j < mlist.length; j++) {
-                if(mlist[i].getLname().equals(mlist[j].getLname())) {
-                    if(mlist[i].getFname().compareTo(mlist[j].getFname()) > 0) {
-                        Member temp = mlist[i];
-                        mlist[i] = mlist[j];
-                        mlist[j] = temp;
-                    }
-                }
-                else {
-                    if(mlist[i].getLname().compareTo(mlist[j].getLname()) > 0) {
-                        Member temp = mlist[i];
-                        mlist[i] = mlist[j];
-                        mlist[j] = temp;
-                    }
+            for(int j = i+1; j < mlist.length; j++) {
+                if(mlist[i].compareTo(mlist[j]) > 0) {
+                    Member temp = mlist[i];
+                    mlist[i] = mlist[j];
+                    mlist[j] = temp;
                 }
             }
         }
