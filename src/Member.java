@@ -69,7 +69,21 @@ public class Member implements Comparable<Member>{
             return -1;
         }
         if(this.fname.compareTo(member.getFname()) == 0){
-
+            if(this.lname.compareTo(member.getLname()) > 0){
+                return 1;
+            }
+            if(this.lname.compareTo(member.getLname()) < 0){
+                return -1;
+            }
+            if(this.lname.compareTo(member.getLname()) == 0){
+                if(this.dob.compareTo(member.getDob()) > 0){
+                    return 1;
+                }
+                if(this.dob.compareTo(member.getDob()) < 0){
+                    return -1;
+                }
+            }
         }
+        return -1;
     }
 }

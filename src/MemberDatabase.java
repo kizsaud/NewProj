@@ -74,6 +74,7 @@ public class MemberDatabase {
     } //print the array contents as is
     public void printByCounty() {
         for(int i = 0; i < mlist.length; i++){
+            mlist[i].getLocation().getCounty();
         }
     } //sort by county and then zipcode
     public void printByExpirationDate() {
