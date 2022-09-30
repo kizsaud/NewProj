@@ -24,6 +24,9 @@ public class MemberDatabase {
     private Member [] mlist;
     private int size;
 
+    public MemberDatabase(){
+        this.size = size;
+    }
     private int find(Member member) {
         int NOT_FOUND = -1;
         for (int i = 0; i < mlist.length; i++) {
