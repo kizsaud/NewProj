@@ -16,7 +16,9 @@ public class GymManager {
             String command = user.substring(0,user.indexOf(" "));
             ptr = user.indexOf(" ", ptr) + 1;
             if(command.equals("A")){
+                //decalre new nember
                 Member m = new Member();
+                // Find Member attributes from string
                 String firstName = user.substring(ptr, user.indexOf(" "));
                 ptr = user.indexOf(" ", ptr) + 1;
                 String lastName = user.substring(ptr, user.indexOf(" "));
@@ -28,17 +30,28 @@ public class GymManager {
                 String city = user.substring(ptr, user.indexOf(" "));
                 ptr = user.indexOf(" ", ptr) + 1;
 
+                //Declare a date and Location for the Member
                 Date exp = new Date(expDate);
                 Date dob = new Date(dobDate);
                 Location location = new Location();
+
+                //Set attributes into member
                 m.setFname(firstName);
                 m.setLname(lastName);
                 m.setDob(dob);
                 m.setExpire(exp);
                 m.setLocation(location);
 
+                //put member in the member database
                 db.add(m);
+            }
+            else if(command.equals("R")){
+                Member m = new Member();
+
+                m = db.find(m);
+                db.remove(m);
             }
         }
     }
 }
+   
