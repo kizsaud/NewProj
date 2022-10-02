@@ -229,7 +229,7 @@ return isAdult;
 
     public boolean isValid(){
 
-        System.out.println(this.month);
+        System.out.println(month);
 
         if ((month == 4 || month == 6 || month == 9 || month == 11) && day <= 30){
             return true;
