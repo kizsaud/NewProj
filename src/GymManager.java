@@ -14,6 +14,7 @@ public class GymManager {
         while(scan.hasNext() || user.equals("Q")){
             user = scan.nextLine();
             String command = "";
+            int i = 0;
             command = user.substring(0,user.indexOf(" "));
             ptr = user.indexOf(" ", ptr) + 1;
             if(command.equals("A")){
@@ -37,12 +38,11 @@ public class GymManager {
 
                 Date today = new Date();
                 //Set attributes into member
-                System.out.println(today.getMonth() + "/" + today.getDay() + "/" + today.getYear());
                 if(dob.compareTo(today) == 1 || dob.compareTo(today) == 0){
                     System.out.println("cannot be today or a future date!");
                 }
-                if(dob.isAdult(dob) == false){
-                    System.out.println("Not an adult");
+                else if(dob.isAdult(dob) == false){
+                    System.out.println("DOB " + dobDate + ": must be 18 or older to join!");
                 }
                 else if(dob.isValid() == false){
                     System.out.println("DOB " + dobDate + ": invalid calender date!");
@@ -83,7 +83,7 @@ public class GymManager {
                 }
 
                 //put member in the member database if they do not exist
-                if(db.add(m) == true && (m.getFname() != null || m.getLname() != null || m.getDob() != null)){
+                if(db.add(m) == true){
                     System.out.println(firstName + " " + lastName + " added.");
                 }
                 else{

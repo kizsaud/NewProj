@@ -46,7 +46,7 @@ public class MemberDatabase {
         mlist=newList;
     }
     public boolean add(Member member) {
-        if(find(member) != -1){
+        if(find(member) == -1){
             if(mlist[mlist.length-1] != null){
                 grow();
             }
