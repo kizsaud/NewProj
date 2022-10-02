@@ -12,17 +12,15 @@ public class Date implements Comparable<Date>{
         int checkYear=Integer.parseInt(Values[2]);
         int checkMonth = Integer.parseInt(Values[0]);
         int checkDay=Integer.parseInt(Values[1]);
-         if( isAdult(D) ){
-            year=checkYear;
-            month=checkMonth;
-            day=checkDay;
-
-            
+        year=checkYear;
+        month=checkMonth;
+        day=checkDay;
+        System.out.println(year);
         }
 
 
 
-    }
+    
 
 
     public Date(){
