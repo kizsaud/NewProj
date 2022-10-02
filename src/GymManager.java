@@ -13,7 +13,8 @@ public class GymManager {
         int ptr = 0;
         while(scan.hasNext() || user.equals("Q")){
             user = scan.nextLine();
-            String command = user.substring(0,user.indexOf(" "));
+            String command = "";
+            command = user.substring(0,user.indexOf(" "));
             ptr = user.indexOf(" ", ptr) + 1;
             if(command.equals("A")){
                 //decalre new nember
@@ -36,8 +37,12 @@ public class GymManager {
 
                 Date today = new Date();
                 //Set attributes into member
-                if(dob.compareTo(today) == 0|| dob.compareTo(today) == -1){
+                System.out.println(today.getMonth() + "/" + today.getDay() + "/" + today.getYear());
+                if(dob.compareTo(today) == 1 || dob.compareTo(today) == 0){
                     System.out.println("cannot be today or a future date!");
+                }
+                if(dob.isAdult(dob) == false){
+                    System.out.println("Not an adult");
                 }
                 else if(dob.isValid() == false){
                     System.out.println("DOB " + dobDate + ": invalid calender date!");
@@ -52,7 +57,7 @@ public class GymManager {
                     m.setExpire(exp);
                 }
                 //set location of member
-                if(city=="Bridgewater"){
+                if(city.equals("BRIDGEWATER")){
                     Location A = Location.Bridgewater;
                     m.setLocation(A);
                 }
@@ -62,10 +67,6 @@ public class GymManager {
                 }
                 else if(city=="Franklin"){
                     Location A = Location.Franklin;
-                    m.setLocation(A);
-                }
-                else if(city=="Somerville"){
-                    Location A = Location.Somerville;
                     m.setLocation(A);
                 }
                 else if(city=="Somerville"){

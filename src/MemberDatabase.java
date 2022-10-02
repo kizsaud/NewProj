@@ -26,11 +26,12 @@ public class MemberDatabase {
 
     public MemberDatabase(){
         this.size = size;
+        this.mlist = new Member[4];
     }
     private int find(Member member) {
         int NOT_FOUND = -1;
         for (int i = 0; i < mlist.length; i++) {
-            if (mlist[i].compareTo(member) == 0) {
+            if (mlist[i] != null && mlist[i].compareTo(member) == 0) {
                 return 1;
             }
         }
@@ -38,16 +39,30 @@ public class MemberDatabase {
     }
 
     private void grow() {
-        Member[] newList = new Member[mlist.length+1];
-        for(int i = 0; i < newList.length; i++){
+        Member[] newList = new Member[mlist.length+4];
+        for(int i = 0; i < mlist.length; i++){
             newList[i] = mlist[i];
         }
         mlist=newList;
     }
     public boolean add(Member member) {
-        grow();
-        mlist[mlist.length] = member;
-        return true;
+        if(find(member) != -1){
+            if(mlist[mlist.length-1] != null){
+                grow();
+            }
+            else{
+                for(int i = 0; i < mlist.length; i++){
+                    if(mlist[i] == null){
+                        mlist[i] = member;
+                        return true;
+                    }
+                }
+            }
+        }
+        else{
+            return false;
+        }
+        return false;
     }
     public boolean remove(Member member) {
         if (find(member) == -1){
