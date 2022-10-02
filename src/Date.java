@@ -12,8 +12,7 @@ public class Date implements Comparable<Date>{
         int checkYear=Integer.parseInt(Values[2]);
         int checkMonth = Integer.parseInt(Values[0]);
         int checkDay=Integer.parseInt(Values[1]);
-        System.out.println(D);
-         if(isValid(checkMonth,checkDay,checkYear) && isAdult(D) ){
+         if( isAdult(D) ){
             year=checkYear;
             month=checkMonth;
             day=checkDay;
@@ -112,7 +111,6 @@ public class Date implements Comparable<Date>{
         return Winner;
     }
     public boolean isLeap(){
-        System.out.println(year);
         if (year % 4 == 0) {
 
             // if the year is century
@@ -193,33 +191,47 @@ public boolean isLeap(int year){
         int month = A.getMonth();
         int day = A.getDay();
         int day2=checkDay;
-        if(checkYear<=Minyear){
+        if (checkYear<Minyear){
+            
 
-            if(month==checkMonth || checkMonth<month){
-                
+            isAdult=true;
+        }
+        if(checkYear==Minyear){
 
+
+            if(month==checkMonth){
                 if(checkDay<=day){
-                System.out.println("HREE BIT CH");
+
 
 
                     isAdult=true;
                 }
-                if (checkYear<Minyear){
-                    isAdult=true;
-                }
-
-
             }
-        }
-        else {
+        if(checkMonth<month){
 
-                isAdult=false;
+                isAdult=true;
+                
             }
+            
+            }
+        
 
-            return isAdult;
+        
+        else{
+            isAdult=false;
         }
+
+return isAdult;
+            }
+        
+     
+
+
+    
 
     public boolean isValid(){
+
+        System.out.println(month);
 
         if ((month == 4 || month == 6 || month == 9 || month == 11) && day <= 30){
             return true;
@@ -230,12 +242,14 @@ public boolean isLeap(int year){
         }
         // For February.
         if(month == 2)
-        {
+        {    
+
+            
             if(day <= 28){
                 return true;
             }
             if(day == 29){
-                if(isLeap())
+                if(isLeap(year))
                     return true;
                 }
             }
