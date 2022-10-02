@@ -15,7 +15,6 @@ public class Date implements Comparable<Date>{
         year=checkYear;
         month=checkMonth;
         day=checkDay;
-        System.out.println(year);
         }
 
 
@@ -74,21 +73,21 @@ public class Date implements Comparable<Date>{
         int SecondMont=0;
         int diff = date.year-this.year;
         if (FirstYear>SecondYear){
-            Winner= 0;
+            Winner= 1;
         }
 
         if(FirstYear<SecondYear){
-            Winner= 1;
+            Winner= -1;
         }
         if(FirstYear==SecondYear){
             FirstMonth=this.month;
             SecondMont=date.month;
 
             if(FirstMonth>SecondMont){
-                Winner= 0;
-            }
-            if(FirstMonth<FirstMonth){
                 Winner= 1;
+            }
+            if(FirstMonth<SecondMont){
+                Winner= -1;
             }
             if(FirstMonth==SecondMont){
                 int FirstDay=this.day;
@@ -96,13 +95,13 @@ public class Date implements Comparable<Date>{
 
 
                 if(FirstDay>SecondDay){
-                    Winner= 0;
-                }
-                if(SecondDay>FirstDay){
                     Winner= 1;
                 }
-                if(SecondDay==FirstDay){
+                if(FirstDay<SecondDay){
                     Winner= -1;
+                }
+                if(SecondDay==FirstDay){
+                    Winner= 0;
                 }
             }
         }
@@ -228,8 +227,6 @@ return isAdult;
     
 
     public boolean isValid(){
-
-        System.out.println(month);
 
         if ((month == 4 || month == 6 || month == 9 || month == 11) && day <= 30){
             return true;
