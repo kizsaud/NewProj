@@ -12,39 +12,14 @@ public class Date implements Comparable<Date>{
         int checkYear=Integer.parseInt(Values[2]);
         int checkMonth = Integer.parseInt(Values[0]);
         int checkDay=Integer.parseInt(Values[1]);
-        if(checkYear>1900 && checkYear<=2023){
+        System.out.println(D);
+         if(isValid(checkMonth,checkDay,checkYear) && isAdult(D) ){
             year=checkYear;
-        }
-
-        if (checkMonth>0 && checkMonth<=12){
             month=checkMonth;
-
-        }
-
-        if (checkDay>0 && checkDay<32){
             day=checkDay;
 
+            
         }
-        if (checkYear % 4 == 0) {
-
-            // if the year is century
-            if (checkYear % 100 == 0) {
-
-                // if year is divided by 400
-                // then it is a leap year
-                if (checkYear % 400 == 0)
-                    leap = true;
-                else
-                    leap = false;
-            }
-
-            // if the year is not century
-            else
-                leap = true;
-        }
-
-        else
-            leap = false;
 
 
 
@@ -137,7 +112,7 @@ public class Date implements Comparable<Date>{
         return Winner;
     }
     public boolean isLeap(){
-        
+        System.out.println(year);
         if (year % 4 == 0) {
 
             // if the year is century
@@ -160,20 +135,38 @@ public class Date implements Comparable<Date>{
             return false;
     }
 
+public boolean isLeap(int year){
+        
+        if (year % 4 == 0) {
 
+            // if the year is century
+            if (year % 100 == 0) {
+
+                // if year is divided by 400
+                // then it is a leap year
+                if (year % 400 == 0)
+                    return true;
+                else
+                    return false;
+            }
+
+            // if the year is not century
+            else
+                return true;
+        }
+
+        else
+            return false;
+    }
     public boolean isAdult(Date DOB){
         boolean isAdult = false;
         Date A = new Date();
         int Minyear = A.getYear()-18;
         int month = A.getMonth();
         int day = A.getDay();
-        int day2=DOB.getDay();;
+        int day2=DOB.getDay();
         if(DOB.getYear()<=Minyear){
-            System.out.println("Here");
             if(month==DOB.getMonth() || DOB.getMonth()<month){
-                System.out.println("hi");
-                System.out.println("Date:" +day2);
-                System.out.println("Date 2: "+day2);
                 if(day2<=day){
                     isAdult=true;
                 }
@@ -184,13 +177,47 @@ public class Date implements Comparable<Date>{
 
 
             else {
-                System.out.println("ELSE");
                 isAdult=false;
             }
 
             return isAdult;
         }
-    
+    public boolean isAdult(String Date){
+        String[] Values=Date.split("/");
+        int checkYear=Integer.parseInt(Values[2]);
+        int checkMonth = Integer.parseInt(Values[0]);
+        int checkDay=Integer.parseInt(Values[1]);
+        boolean isAdult = false;
+        Date A = new Date();
+        int Minyear = A.getYear()-18;
+        int month = A.getMonth();
+        int day = A.getDay();
+        int day2=checkDay;
+        if(checkYear<=Minyear){
+
+            if(month==checkMonth || checkMonth<month){
+                
+
+                if(checkDay<=day){
+                System.out.println("HREE BIT CH");
+
+
+                    isAdult=true;
+                }
+                if (checkYear<Minyear){
+                    isAdult=true;
+                }
+
+
+            }
+        }
+        else {
+
+                isAdult=false;
+            }
+
+            return isAdult;
+        }
 
     public boolean isValid(){
 
@@ -209,6 +236,31 @@ public class Date implements Comparable<Date>{
             }
             if(day == 29){
                 if(isLeap())
+                    return true;
+                }
+            }
+            return false;
+
+            
+        }
+        
+    public boolean isValid(int month,int day , int year){
+
+        if ((month == 4 || month == 6 || month == 9 || month == 11) && day <= 30){
+            return true;
+        }
+        // For months with 31 days.
+        if ((month == 1 || month == 3 || month == 5 || month == 7 || month == 8 || month == 10 || month == 12) && day <= 31){
+            return true;
+        }
+        // For February.
+        if(month == 2)
+        {
+            if(day <= 28){
+                return true;
+            }
+            if(day == 29){
+                if(isLeap(year))
                     return true;
                 }
             }
