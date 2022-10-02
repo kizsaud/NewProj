@@ -19,26 +19,22 @@ public class GymManager {
                 //decalre new nember
                 Member m = new Member();
                 // Find Member attributes from string
-                String firstName = user.substring(ptr, user.indexOf(" "));
+                String firstName = user.substring(ptr, user.indexOf(" ", ptr));
                 ptr = user.indexOf(" ", ptr) + 1;
-                String lastName = user.substring(ptr, user.indexOf(" "));
+                String lastName = user.substring(ptr, user.indexOf(" ", ptr));
                 ptr = user.indexOf(" ", ptr) + 1;
-                String dobDate = user.substring(ptr, user.indexOf(" "));
+                String dobDate = user.substring(ptr, user.indexOf(" ", ptr));
                 ptr = user.indexOf(" ", ptr) + 1;
-                String expDate = user.substring(ptr, user.indexOf(" "));
+                String expDate = user.substring(ptr, user.indexOf(" ", ptr));
                 ptr = user.indexOf(" ", ptr) + 1;
-                String city = user.substring(ptr, user.indexOf(" "));
+                String city = user.substring(ptr);
                 ptr = user.indexOf(" ", ptr) + 1;
 
                 //Declare a date and Location for the Member
                 Date exp = new Date(expDate);
                 Date dob = new Date(dobDate);
 
-
-
                 Date today = new Date();
-                Date adult = new Date();
-                adult.setYear(adult.getYear() - 18);
                 //Set attributes into member
                 if(dob.compareTo(today) == 0|| dob.compareTo(today) == -1){
                     System.out.println("cannot be today or a future date!");
@@ -46,7 +42,7 @@ public class GymManager {
                 else if(dob.isValid() == false){
                     System.out.println("DOB " + dobDate + ": invalid calender date!");
                 }
-                else if(exp.isValid() == false){
+                if(exp.isValid() == false){
                     System.out.println("Expiration date " + expDate + ": invalid calender date!");
                 }
                 else{
@@ -80,10 +76,13 @@ public class GymManager {
                     Location A = Location.Piscataway;
                     m.setLocation(A);
                 }
+                else{
+                    System.out.println("invalid location!");
+                    continue;
+                }
 
                 //put member in the member database if they do not exist
-
-                if(db.add(m) == true){
+                if(db.add(m) == true && (m.getFname() != null || m.getLname() != null || m.getDob() != null)){
                     System.out.println(firstName + " " + lastName + " added.");
                 }
                 else{
