@@ -30,8 +30,8 @@ public class MemberDatabase {
     private int find(Member member) {
         int NOT_FOUND = -1;
         for (int i = 0; i < mlist.length; i++) {
-            if (mlist[i] == member) {
-                return i;
+            if (mlist[i].compareTo(member) == 0) {
+                return 1;
             }
         }
         return NOT_FOUND;
@@ -50,18 +50,23 @@ public class MemberDatabase {
         return true;
     }
     public boolean remove(Member member) {
-        for(int x = 0; x < mlist.length; x++){
-            if(mlist[x] == member) {
-                Member[] newList = new Member[mlist.length - 1];
-                for (int i = 0; i < mlist.length; i++) {
-                    if (mlist[i] == member) {
-                        i++;
-                    } else {
-                        newList[i] = mlist[i];
+        if (find(member) == -1){
+            return false;
+        }
+        else{
+            for(int x = 0; x < mlist.length; x++){
+                if(mlist[x] == member) {
+                    Member[] newList = new Member[mlist.length - 1];
+                    for (int i = 0; i < mlist.length; i++) {
+                        if (mlist[i] == member) {
+                            i++;
+                        } else {
+                            newList[i] = mlist[i];
+                        }
                     }
+                    mlist = newList;
+                    return true;
                 }
-                mlist = newList;
-                return true;
             }
         }
         return false;

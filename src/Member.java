@@ -83,11 +83,13 @@ public class Member implements Comparable<Member>{
                 if(this.dob.compareTo(member.getDob()) > 0){
                     return 1;
                 }
-                if(this.dob.compareTo(member.getDob()) < 0){
+                else if(this.dob.compareTo(member.getDob()) < 0){
                     return -1;
+                }
+                else{
+                    return 0;
                 }
             }
         }
-        return -1;
     }
 }
