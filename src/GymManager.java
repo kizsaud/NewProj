@@ -25,6 +25,9 @@ public class GymManager {
             if (addMemberToDatabase(commands)) {
                 System.out.println("member added to database");
             }
+            else{
+                System.out.println("Member already in database");
+            }
         }
         else if ("R".equals(command)) {
             Date date = new Date(commands[3]);
