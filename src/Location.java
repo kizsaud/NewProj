@@ -9,8 +9,8 @@ public enum Location {
     String County;
 
     Location(String Z, String C) {
-        zipcode = Z;
-        County = C;
+        this.zipcode = Z;
+        this.County = C;
 
 
     }
@@ -20,5 +20,8 @@ public enum Location {
     }
     public String getCounty(Location a) {
         return a.County;
+    }
+    public String getBoth() {
+        return County + zipcode;
     }
 }
