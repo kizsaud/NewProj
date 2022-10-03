@@ -46,40 +46,33 @@ public class MemberDatabase {
         mlist=newList;
     }
     public boolean add(Member member) {
-        if(find(member) == -1){
-            if(mlist[mlist.length-1] != null){
-                grow();
-            }
-            else{
-                for(int i = 0; i < mlist.length; i++){
-                    if(mlist[i] == null){
-                        mlist[i] = member;
-                        return true;
-                    }
-                }
-            }
-        }
-        else{
+        if(find(member) != -1){
             return false;
         }
-        return false;
+        if(size == mlist.length-1){
+            grow();
+        }
+        mlist[size] = member;
+        size++;
+        return true;
     }
     public boolean remove(Member member) {
-        if(find(member) < 0){
+        if(find(member) == -1){
             return false;
         }
-        Member [] temp = new Member[size];
-        boolean found = true;
-        int indx = 0;
+        Member[]temp = new Member[size];
+        boolean found = false;
+        int memberIDX = 0;
         for(int i = 0; i < size; i++){
             if(mlist[i] != null && member.equals(mlist[i])){
                 found = true;
             }
             else{
-                temp[indx] = mlist[i];
-                indx++;
+                temp[memberIDX] = mlist[i];
+                memberIDX++;
             }
         }
+        size--;
         mlist = temp;
         return found;
     }
@@ -92,37 +85,48 @@ public class MemberDatabase {
         }
     } //print the array contents as is
     public void printByCounty() {
-        //Sort The List
-        for(int i = 0; i < mlist.length; i++){
-            mlist[i].getLocation().getCounty(mlist[i].getLocation());
+        int increment = 1;
+        while (increment < size) {
+            increment = 2 * increment + 1;
         }
+        while (increment >= 1) {
+            for (int i = increment; i < size; i++) {
+                for (int j = i; j >= increment; j -= increment) {
+                    if (mlist[j].getLocation().getBoth().compareTo(mlist[j - increment].getLocation().getBoth()) < 0) {
+                        Member temp = mlist[j];
+                        mlist[j] = mlist[j - increment];
+                        mlist[j - increment] = temp;
+                    } else {
+                        break;
+                    }
+                }
+            }
+            increment /= 2;
+        }
+        print();
     } //sort by county and then zipcode
     public void printByExpirationDate() {
-        for(int i = 0; i< mlist.length; i++) {
-            for(int j = i+1; j < mlist.length; j++) {
-                if(mlist[i].getExpire().compareTo(mlist[j].getExpire()) == 0) {
-                    Member temp = mlist[i];
-                    mlist[i] = mlist[j];
-                    mlist[j] = temp;
-                }
+        for (int i = 1; i < this.size; i++) {
+            Member m = mlist[i];
+            int j = i - 1;
+            while (j >= 0 && mlist[j].getExpire().compareTo(m.getExpire()) == 1) {
+                mlist[j + 1] = mlist[j];
+                j--;
             }
+            mlist[j + 1] = m;
         }
-        for(int i = 0; i < mlist.length; i++){
-            System.out.println(mlist[i].toString());
-        }
+        print();
     }
     public void printByName() {
-        for(int i = 0; i < mlist.length; i++) {
-            for(int j = i+1; j < mlist.length; j++) {
-                if(mlist[i].compareTo(mlist[j]) > 0) {
-                    Member temp = mlist[i];
-                    mlist[i] = mlist[j];
-                    mlist[j] = temp;
-                }
+        for(int i = 0; i < size; i++){
+            Member m = mlist[i];
+            int j = i - 1;
+            while(j >= 0 && (mlist[j] != null && mlist[i] != null) && (mlist[j].getLname().compareTo(m.getLname())) > 0){
+                mlist[j + 1] = mlist[j];
+                j = j - 1;
             }
+            mlist[j + 1] = m;
         }
-        for(int i = 0; i < mlist.length; i++) {
-            System.out.println(mlist[i].toString());
-        }
+        print();
     }
 }
