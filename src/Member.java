@@ -50,36 +50,26 @@ public class Member implements Comparable<Member>{
     @Override
     public boolean equals(Object obj)
     {
-        Member member = (Member)obj;
-        String firstName = fname.toLowerCase();
-        String lastName = lname.toLowerCase();
-        String secondFirstName = member.getFname().toLowerCase();
-        String secondLastName = member.getLname().toLowerCase();
-        if (firstName.equals(secondFirstName) && lastName.equals(secondLastName) && dob.compareTo(member.dob) == 0) {
+        Member m = (Member)obj;
+        String ln = lname.toLowerCase();
+        String fn = fname.toLowerCase();
+        String lnOther = m.getLname().toLowerCase();
+        String fnOther = m.getFname().toLowerCase();
+
+        if(fn.equals(fnOther) && ln.equals(lnOther) && dob.compareTo(m.dob) == 0){
             return true;
         }
-        else{
-            return false;
-        }
+        return false;
     }
     @Override
     public int compareTo(Member member)
     {
-        if(!(this.fname.equals(member.getFname()))){
-            return -1;
+        if(this.fname.equals(member.getFname()) && this.lname.equals(member.getLname()) && this.dob.compareTo(member.dob) == 0){
+            return 0;
         }
         else{
-            if(!(this.lname.equals(member.getLname()))){
-                return -1;
-            }
-            else{
-                if(this.dob.compareTo(member.getDob()) != 0){
-                    return -1;
-                }
-                else{
-                    return 1;
-                }
-            }
+            return -1;
         }
+
     }
 }
