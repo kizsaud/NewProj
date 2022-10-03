@@ -1,27 +1,45 @@
+package ProjectOne;
+
+
+
 public class MemberDatabase {
     enum Locations{
-            Bridgewater("08807","Somerset County"),
-            Edison("08837","Middlesex County"),
-            Franklin("08873","Somerset County"),
-            Piscataway("08854","Middlesex County"),
-            Somerville("08876","Somerset County");
+        Bridgewater("08807","Somerset County"),
+        Edison("08837","Middlesex County"),
+        Franklin("08873","Somerset County"),
+        Piscataway("08854","Middlesex County"),
+        Somerville("08876","Somerset County");
 
-            String zipcode;
-            String County;
-            Locations(String Z, String C){
-                zipcode=Z;
-                County=C;
+        String zipcode;
+        String County;
+        Locations(String Z, String C){
+            zipcode=Z;
+            County=C;
 
 
-            }
-            public String getCounty(Locations a){
-                return a.County;
-
-            }
         }
+        public String getCounty(Locations a){
+            return a.County;
+
+        }
+    }
+    public int contains(Member member) {
+        return find(member);
+    }
+    public Member getMember(int index){
+        return mlist[index];
+
+    }
+
+    public void printSchedule() {
+        for (int i = 0; i < size; i++) {
+            System.out.print("\t\t");
+            System.out.println(mlist[i].toString());
+        }
+    }
 
 
-    private Member [] mlist;
+    private Member[] mlist;
     private int size;
 
     public MemberDatabase(){
@@ -128,5 +146,8 @@ public class MemberDatabase {
             mlist[j + 1] = m;
         }
         print();
+    }
+    public int getSizeOfDB() {
+        return size;
     }
 }
