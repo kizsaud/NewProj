@@ -23,11 +23,11 @@ public class FitnessClass {
     public String checkIn(String Class, Member member){
         String checkInProgress="Not checked in";
         if(Class=="PILATES"|| Class == "Pilates"){
-           
+
             PILATES[PILATES.length]=member;
             checkInProgress= "ADDED TO PILATES";
         }
-        
+
 
         if(Class=="Spinning"|| Class=="SPINNING"){
             SPINNING[SPINNING.length]=member;
@@ -46,5 +46,4 @@ public class FitnessClass {
     }
 
     
-
-    
+}

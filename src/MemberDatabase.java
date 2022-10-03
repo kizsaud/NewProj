@@ -31,8 +31,8 @@ public class MemberDatabase {
     private int find(Member member) {
         int NOT_FOUND = -1;
         for (int i = 0; i < mlist.length; i++) {
-            if (mlist[i] != null && mlist[i].compareTo(member) == 0) {
-                return 1;
+            if (mlist[i] != null && mlist[i].equals(member)) {
+                return i;
             }
         }
         return NOT_FOUND;
@@ -65,34 +65,34 @@ public class MemberDatabase {
         return false;
     }
     public boolean remove(Member member) {
-        if (find(member) == -1){
+        if(find(member) < 0){
             return false;
         }
-        else{
-            for(int x = 0; x < mlist.length; x++){
-                if(mlist[x] == member) {
-                    Member[] newList = new Member[mlist.length - 1];
-                    for (int i = 0; i < mlist.length; i++) {
-                        if (mlist[i] == member) {
-                            i++;
-                        } else {
-                            newList[i] = mlist[i];
-                        }
-                    }
-                    mlist = newList;
-                    return true;
-                }
+        Member [] temp = new Member[size];
+        boolean found = true;
+        int indx = 0;
+        for(int i = 0; i < size; i++){
+            if(mlist[i] != null && member.equals(mlist[i])){
+                found = true;
+            }
+            else{
+                temp[indx] = mlist[i];
+                indx++;
             }
         }
-        return false;
+        mlist = temp;
+        return found;
     }
 
     public void print () {
         for(int i = 0; i < mlist.length; i++) {
-            System.out.println(mlist[i].toString());
+            if(mlist[i] != null){
+                System.out.println(mlist[i].toString());
+            }
         }
     } //print the array contents as is
     public void printByCounty() {
+        //Sort The List
         for(int i = 0; i < mlist.length; i++){
             mlist[i].getLocation().getCounty(mlist[i].getLocation());
         }

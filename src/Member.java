@@ -42,52 +42,42 @@ public class Member implements Comparable<Member>{
     @Override
     public String toString() {
         Date temp = new Date();
-        if(this.getExpire().compareTo(temp) == 1 || this.getExpire().compareTo(temp) == -1){
-            return fname + " " + lname + ", DOB: " + dob + "," + " Membership expired" + expire + ", Location: " + location;
+        if(this.getExpire().compareTo(temp) == 0 || this.getExpire().compareTo(temp) == -1){
+            return fname + " " + lname + ", DOB: " + dob.getMonth() + "/" + dob.getDay() + "/" + dob.getYear() + "," + " Membership expired: " + expire.getMonth() + "/" + expire.getDay() + "/" + expire.getYear() + ", Location: " + location;
         }
-        return fname + " " + lname + ", DOB: " + dob + "," + " Membership expires" + expire + ", Location: " + location;
+        return fname + " " + lname + ", DOB: " + dob.getMonth() + "/" + dob.getDay() + "/" + dob.getYear() + "," + " Membership expires: " + expire.getMonth() + "/" + expire.getDay() + "/" + expire.getYear() + ", Location: " + location;
     }
     @Override
     public boolean equals(Object obj)
     {
-        if(obj == this)
-        {
+        Member member = (Member)obj;
+        String firstName = fname.toLowerCase();
+        String lastName = lname.toLowerCase();
+        String secondFirstName = member.getFname().toLowerCase();
+        String secondLastName = member.getLname().toLowerCase();
+        if (firstName.equals(secondFirstName) && lastName.equals(secondLastName) && dob.compareTo(member.dob) == 0) {
             return true;
         }
-        if(obj == null)
-        {
-            return false;
-        }
-        else
-        {
+        else{
             return false;
         }
     }
     @Override
     public int compareTo(Member member)
     {
-        if(this.fname.compareTo(member.getFname()) > 0){
-            return 1;
-        }
-        else if(this.fname.compareTo(member.getFname()) < 0){
+        if(!(this.fname.equals(member.getFname()))){
             return -1;
         }
         else{
-            if(this.lname.compareTo(member.getLname()) > 0){
-                return 1;
-            }
-            else if(this.lname.compareTo(member.getLname()) < 0){
+            if(!(this.lname.equals(member.getLname()))){
                 return -1;
             }
             else{
-                if(this.dob.compareTo(member.getDob()) > 0){
-                    return 1;
-                }
-                else if(this.dob.compareTo(member.getDob()) < 0){
+                if(this.dob.compareTo(member.getDob()) != 0){
                     return -1;
                 }
                 else{
-                    return 0;
+                    return 1;
                 }
             }
         }

@@ -153,6 +153,34 @@ public boolean isLeap(int year){
         else
             return false;
     }
+    public boolean isAdult(){
+        boolean isAdult = false;
+        Date A = new Date();
+        int Minyear = A.getYear()-18;
+        int month = A.getMonth();
+        int day = A.getDay();
+        int day2=this.getDay();
+        if(this.getYear()==Minyear){
+            if(month==this.getMonth() || this.getMonth()<month){
+                System.out.println("hi");
+                if(day2<=day){
+                    isAdult=true;
+                }
+
+
+            }
+        }
+        else if(this.getYear() < Minyear){
+            return true;
+        }
+
+
+        else {
+            isAdult=false;
+        }
+
+        return isAdult;
+    }
     public boolean isAdult(Date DOB){
         boolean isAdult = false;
         Date A = new Date();
