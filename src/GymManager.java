@@ -11,8 +11,6 @@ public class GymManager {
         Scanner scan = new Scanner(System.in);
         String command = "";
         String[] commands;
-        String user = "";
-        int ptr = 0;
         while (scan.hasNext()) {
             command = scan.nextLine();
             commands = command.split("\\s");
