@@ -1,9 +1,30 @@
+package ProjectOne;
 public class Member implements Comparable<Member>{
     private String fname;
     private String lname;
     private Date dob;
     private Date expire;
     private Location location;
+    public Member(){
+
+    }
+    public Member(String fname, String lname, Date dob, Date expire, Location location) {
+        this.fname = fname;
+        this.lname = lname;
+        this.dob = dob;
+        this.expire = expire;
+        this.location = location;
+    }
+    public Member(String fname, String lname, Date dob) {
+        this.fname = fname;
+        this.lname = lname;
+        this.dob = dob;
+    }
+    public Member(String fname, String lname) {
+        this.fname = fname;
+        this.lname = lname;
+    }
+
 
     public String getFname()
     {
@@ -17,6 +38,7 @@ public class Member implements Comparable<Member>{
     {
         return lname;
     }
+
     public void setLname(String val)
     {
         lname = val;
@@ -48,17 +70,16 @@ public class Member implements Comparable<Member>{
         return fname + " " + lname + ", DOB: " + dob.getMonth() + "/" + dob.getDay() + "/" + dob.getYear() + "," + " Membership expires: " + expire.getMonth() + "/" + expire.getDay() + "/" + expire.getYear() + ", Location: " + location;
     }
     @Override
-    public boolean equals(Object obj)
-    {
-        Member m = (Member)obj;
-        String ln = lname.toLowerCase();
-        String fn = fname.toLowerCase();
-        String lnOther = m.getLname().toLowerCase();
-        String fnOther = m.getFname().toLowerCase();
-
-        if(fn.equals(fnOther) && ln.equals(lnOther) && dob.compareTo(m.dob) == 0){
-            return true;
+    public boolean equals(Object obj) {
+        if (obj instanceof Member objMember) {
+            boolean isFNameSame = this.fname.equalsIgnoreCase(objMember.fname);
+            boolean isLNameSame = this.lname.equalsIgnoreCase(objMember.lname);
+            boolean isDobSame = this.getDob().getDay() == objMember.getDob().getDay() &&
+                    this.getDob().getMonth() == objMember.getDob().getMonth() &&
+                    this.getDob().getYear() == objMember.getDob().getYear();
+            return isFNameSame && isLNameSame && isDobSame;
         }
+        int a = "aaa".compareTo("aa");
         return false;
     }
     @Override
