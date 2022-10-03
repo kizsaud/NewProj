@@ -169,13 +169,13 @@ public class MemberDatabase {
      */
     public void printByExpirationDate() {
         for (int i = 1; i < this.size; i++) {
-            Member m = mlist[i];
+            Member member = mlist[i];
             int j = i - 1;
-            while (j >= 0 && mlist[j].getExpire().compareTo(m.getExpire()) == 1) {
+            while (j >= 0 && mlist[j].getExpire().compareTo(member.getExpire()) == 1) {
                 mlist[j + 1] = mlist[j];
                 j--;
             }
-            mlist[j + 1] = m;
+            mlist[j + 1] = member;
         }
         print();
     }
@@ -186,13 +186,13 @@ public class MemberDatabase {
      */
     public void printByName() {
         for(int i = 0; i < size; i++){
-            Member m = mlist[i];
+            Member member = mlist[i];
             int j = i - 1;
-            while(j >= 0 && (mlist[j] != null && mlist[i] != null) && (mlist[j].getLname().compareTo(m.getLname())) > 0){
+            while(j >= 0 && (mlist[j] != null && mlist[i] != null) && (mlist[j].getLname().compareTo(member.getLname())) > 0){
                 mlist[j + 1] = mlist[j];
                 j = j - 1;
             }
-            mlist[j + 1] = m;
+            mlist[j + 1] = member;
         }
         print();
     }
