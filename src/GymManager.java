@@ -23,9 +23,9 @@ public class GymManager {
      This method also collects all the parts of a command and sends it out to an execute command class.
      */
     public void run() {
-        fitnessClasses[0] = new FitnessClass("Pilates", "Jennifer", Time.Pilates, db, fitnessClasses);
-        fitnessClasses[1] = new FitnessClass("Spinning", "Denise", Time.Spinning, db, fitnessClasses);
-        fitnessClasses[2] = new FitnessClass("Cardio", "Kim", Time.Cardio, db, fitnessClasses);
+        fitnessClasses[0] = new FitnessClass(db,"Jennifer","Pilates", Time.Pilates, fitnessClasses);
+        fitnessClasses[1] = new FitnessClass(db,"Denise","Spinning", Time.Spinning, fitnessClasses);
+        fitnessClasses[2] = new FitnessClass(db,"Kim","Cardio", Time.Cardio, fitnessClasses);
         System.out.println("Gym Manager running...");
         Scanner scan = new Scanner(System.in);
         String command = "";
@@ -58,17 +58,16 @@ public class GymManager {
 
         else if (command.equals("R")) {
             Date date = new Date(commands[3]);
-            Member m = new Member();
-            m.setFname(commands[1]);
-            m.setLname(commands[2]);
-            m.setDob(date);
-            if(db.remove(m) == true){
+            Member member = new Member();
+            member.setFname(commands[1]);
+            member.setLname(commands[2]);
+            member.setDob(date);
+            if(db.remove(member) == true){
                 System.out.println(commands[1] + " " +commands[2] + " removed.");
             }
             else{
                 System.out.println(commands[1] + " " + commands[2] + " doesn't exist.");
             }
-
         }
         else if (command.equals("P")) {
             System.out.println("-list of members-");
@@ -104,16 +103,16 @@ public class GymManager {
             String className = commands[1];
             Date dob = new Date(commands[4]);
 
-            Member m = new Member();
-            m.setDob(dob);
-            m.setFname(fName);
-            m.setLname(lName);
+            Member member = new Member();
+            member.setDob(dob);
+            member.setFname(fName);
+            member.setLname(lName);
 
-            if (db.contains(m) != -1) {
-                m = db.getMember(db.contains(m));
+            if (db.contains(member) != -1) {
+                member = db.getMember(db.contains(member));
                 for (int i = 0; i < fitnessClasses.length; i++) {
                     if ((fitnessClasses[i].getFitnessName()).equalsIgnoreCase(className)) {
-                        fitnessClasses[i].checkIn(m, className, fitnessClasses, db);
+                        fitnessClasses[i].checkIn(member, db, className, fitnessClasses);
                         return;
                     }
                 }
@@ -127,10 +126,10 @@ public class GymManager {
             String firstName = commands[2];
             String lastName = commands[3];
             Date dob = new Date(commands[4]);
-            Member m = new Member();
-            m.setLname(lastName);
-            m.setFname(firstName);
-            m.setDob(dob);
+            Member member = new Member();
+            member.setLname(lastName);
+            member.setFname(firstName);
+            member.setDob(dob);
             for (int i = 0; i < fitnessClasses.length; i++) {
                 if (fitnessClasses[i].getFitnessName().equalsIgnoreCase(fitnessClassName)) {
                     fitnessClasses[i].dropClass(new Member(firstName, lastName, dob), db);
@@ -178,11 +177,11 @@ public class GymManager {
             checkLocation = false;
         }
         if (dob.isValid() && dob.isAdult() && exp.isValid() && checkLocation == true) {
-            Member m = new Member();
-            m.setDob(dob);
-            m.setExpire(exp);
-            m.setFname(commands[1]);
-            m.setLname(commands[2]);
+            Member member = new Member();
+            member.setDob(dob);
+            member.setExpire(exp);
+            member.setFname(commands[1]);
+            member.setLname(commands[2]);
 
             //Split location back to match enum location
             String finalLocation1 = location.substring(1).toLowerCase();
@@ -190,8 +189,8 @@ public class GymManager {
 
             //Put it back together here
             location = finalLocation2 + finalLocation1;
-            m.setLocation(Location.valueOf(location));
-            return db.add(m);
+            member.setLocation(Location.valueOf(location));
+            return db.add(member);
         } else {
             if(dob.isAdult() == false){
                 System.out.println("DOB " + dob.getMonth() + "/" + dob.getDay() + "/" + dob.getYear() + ": must be 18 or older to join!");
