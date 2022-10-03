@@ -1,16 +1,23 @@
+package ProjectOne;
 import java.util.Scanner;
 
 public class GymManager {
     MemberDatabase db = new MemberDatabase();
+    private final int finalIntClassSize=3;
+    FitnessClass[] fitnessClasses = new FitnessClass[finalIntClassSize];
     int classes = 3;
-    FitnessClass[] fitnessClasses = new FitnessClass[classes];
+    //FitnessClass[] fitnessClasses = new FitnessClass[classes];
 
     public void run() {
-
+        fitnessClasses[0] = new FitnessClass("Pilates", "Jennifer", Time.Pilates, db, fitnessClasses);
+        fitnessClasses[1] = new FitnessClass("Spinning", "Denise", Time.Spinning, db, fitnessClasses);
+        fitnessClasses[2] = new FitnessClass("Cardio", "Kim", Time.Cardio, db, fitnessClasses);
         System.out.println("Gym Manager running...");
         Scanner scan = new Scanner(System.in);
         String command = "";
         String[] commands;
+        String user = "";
+        int ptr = 0;
         while (scan.hasNext()) {
             command = scan.nextLine();
             commands = command.split("\\s");
@@ -27,6 +34,27 @@ public class GymManager {
                 System.out.println("Member already in database");
             }
         }
+        else if("C".equals(command)){
+            String fName = commands[2];
+            String lName = commands[3];
+            String className = commands[1];
+            Date dob = new Date(commands[4]);
+            Member findMember = new Member(fName,lName,dob);
+
+            if (db.contains(findMember) != -1) {
+                findMember = db.getMember(db.contains(findMember));
+                for (int i = 0; i < fitnessClasses.length; i++) {
+                    if ((fitnessClasses[i].getFitnessName()).equalsIgnoreCase(className)) {
+                        fitnessClasses[i].checkIn(findMember, className, fitnessClasses, db);
+                        return;
+                    }
+                }
+                System.out.println(className + " class does not exist");
+            } else {
+                System.out.println(fName + " " + lName + " " + dob.toString() + " is not in the database.");
+            }
+        }
+
         else if ("R".equals(command)) {
             Date date = new Date(commands[3]);
             Member m = new Member();
@@ -68,6 +96,9 @@ public class GymManager {
         else if ("Q".equals(command)) {
             System.out.println("Gym Manager terminated.");
             System.exit(0);
+        }
+        else if("C".equals(command)){
+
         }
     }
 
@@ -125,4 +156,3 @@ public class GymManager {
 
     }
 }
-   
