@@ -21,7 +21,7 @@ public class FitnessClass {
      @param mbdb Database for keeping track of members
      @param fitnessClasses array for storing multiple fitness classes
      */
-    public FitnessClass(String fitnessClassName, String instructorName, Time classTime, MemberDatabase mbdb, FitnessClass []  fitnessClasses){
+    public FitnessClass(MemberDatabase mbdb, String instructorName, String fitnessClassName, Time classTime, FitnessClass []  fitnessClasses){
         this.fitnessClassName=fitnessClassName;
         this.instructorName=instructorName;
         this.classTime = classTime;
@@ -35,7 +35,7 @@ public class FitnessClass {
      @param member the name of the member that is being checked for registration.
      @return true if member is attending, false otherwise.
      */
-    public boolean isRegistered(Member member) {
+    public boolean isSignedUp(Member member) {
         return attending.contains(member) != notFoundResult;
     }
 
@@ -43,26 +43,11 @@ public class FitnessClass {
     /**
      @return a list of who is attending classes.
      */
-    public MemberDatabase getAttendingList(){
+    public MemberDatabase getClassRoster(){
         return attending;
     }
     //Return Instructor Name
 
-    /**
-     @return return name of the instructor for classes
-     */
-    public String getInstructor() {
-        return instructorName;
-    }
-    //Set the instuctor
-
-    /**
-     This method sets instructors with the instructor name given.
-     @param instructorName The name of the instructor to set.
-     */
-    public void setInstructor(String instructorName) {
-        this.instructorName = instructorName;
-    }
     /**
      This method gets the name of the fitness class.
      @return the name of the fitness class.
@@ -72,27 +57,11 @@ public class FitnessClass {
     }
 
     /**
-     This method sets the fitness class name.
-     @param fitnessClassName the name of the fitnessclass
-     */
-    public void setFitnessClassName(String fitnessClassName) {
-        this.fitnessClassName = fitnessClassName;
-    }
-
-
-    /**
      Get method for class time.
      @return Time class time.
      */
     public Time getClassTime() {
         return classTime;
-    }
-    /**
-     Set method for the the time of the class
-     @param classTime the class time..
-     */
-    public void setTime(Time classTime) {
-        this.classTime = classTime;
     }
 
     /**
@@ -129,7 +98,7 @@ public class FitnessClass {
      @param member the member who's expiration is being checked.
      @return true if the membership date is at or exceeds todays date, false otherwise.
      */
-    public boolean isExpired(Member member) {
+    public boolean checkExpiration(Member member) {
         return member.getExpire().compareTo(new Date()) < 0;
     }
 
@@ -153,7 +122,7 @@ public class FitnessClass {
             if ((fitnessClasses[i].getFitnessName()).equalsIgnoreCase(cN)) {
                 continue;
             }
-            if (fitnessClasses[i].getAttendingList().contains(id) != notFoundResult) {
+            if (fitnessClasses[i].getClassRoster().contains(id) != notFoundResult) {
                 if (time.equalsIgnoreCase(fitnessClasses[i].getClassTime().getDateTime())) {
                     return true;
                 }
@@ -168,15 +137,6 @@ public class FitnessClass {
      @param className name of the class passed.
      @return true if the class exists in the database, false otherwise
      */
-    private boolean isClassExist(String className) {
-
-        for (int i = 0; i < fitnessClasses.length; i++) {
-            if (className.equalsIgnoreCase(fitnessClasses[i].getFitnessName())) {
-                return true;
-            }
-        }
-        return false;
-    }
 
     /**
      This class is for checking a member into a class if they haven't checked in already.
@@ -185,33 +145,29 @@ public class FitnessClass {
      This method also takes care of if the memeber's membership has expired or not.
      If they pass the conditions they will be checked into the class
      @param member the memeber that needs to be checked in
-     @param className The name of the class member is checking into.
-     @param fitnessClasses the array of fitness classes to check into.
      @param memberDb For checking if the member is in the database.
+     @param fitnessClassName The name of the class member is checking into.
+     @param fitnessClasses the array of fitness classes to check into.
      */
-    public void checkIn(Member member, String className, FitnessClass[] fitnessClasses, MemberDatabase memberDb) {
-        if(member.getDob().isAdult()){
-            if(!isRegistered(member)){
-                if(!isExpired(member)){
-                    if (!isTimeConflict(className, fitnessClasses, member)) {
-                        System.out.println(member.getFname() + " " + member.getLname() + " checked in " + className);
-                        attending.add(member);
-                    }else{
-                        System.out.println(className + " time conflict -- " +member.getFname() + " " + member.getLname() + " has already checked in " + className);
-
-                    }
-
+    public void checkIn(Member member, MemberDatabase memberDb, String fitnessClassName, FitnessClass[] fitnessClasses) {
+        if(member.getDob().isAdult() && !isSignedUp(member)){
+            if(!checkExpiration(member)){
+                if (!isTimeConflict(fitnessClassName, fitnessClasses, member)) {
+                    System.out.println(member.getFname() + " " + member.getLname() + " checked in " + fitnessClassName);
+                    attending.add(member);
                 }
-            }else{
-                System.out.println(member.getFname() + " " + member.getLname() + " has already checked in " + className);
-
+                else{
+                    System.out.println(fitnessClassName + " time conflict -- " +member.getFname() + " " + member.getLname() + " has already checked in " + fitnessClassName);
+                }
+            }
+            else{
+                System.out.println(member.getFname() + " " + member.getLname() + " has already checked in " + fitnessClassName);
             }
         }else {
             System.out.println(member.getFname() + " " + member.getLname() + " " + member.getDob().toString() + " membership has expired.");
 
         }
-
-
     }
+
 
 }
