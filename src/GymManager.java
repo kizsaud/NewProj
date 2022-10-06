@@ -144,6 +144,27 @@ public class GymManager {
                 fitnessClasses[i].printSchedule();
             }
         }
+        else if(commands.equals("LS")){
+
+        }
+        else if(commands.equals("LM")){
+
+        }
+        else if(commands.equals("AF")){
+
+        }
+        else if(commands.equals("AP")){
+
+        }
+        else if(commands.equals("PF")){
+
+        }
+        else if(commands.equals("CG")){
+
+        }
+        else if(commands.equals("DG")){
+
+        }
     }
 
     /**
@@ -154,8 +175,13 @@ public class GymManager {
      @return true if the member was added, and false if the member wasn't added.
      */
     public boolean addMemberToDatabase(String[] commands) {
-        String location = commands[5];
-        Date exp = new Date(commands[4]);
+        String location = commands[4];
+        Date exp = new Date();
+        exp.setMonth(exp.getMonth()+3);
+        if(exp.getMonth() > 12){
+            exp.setMonth(exp.getMonth()-12);
+            exp.setYear(exp.getYear()+1);
+        }
         Date dob = new Date(commands[3]);
         boolean checkLocation = true;
         location = location.toUpperCase();
