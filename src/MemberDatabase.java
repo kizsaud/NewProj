@@ -1,33 +1,63 @@
+/**
+ This class is meant for storing members in the database and conducting other operations along with it.
+ This class conducts operations such as add member, remove member, find member.
+ This class also sorts and prints by different orders such as County, Expire Date, Name, or no specific order.
+ @author Abhijeet Singh, Khizar Saud
+ */
+
 public class MemberDatabase {
     enum Locations{
-            Bridgewater("08807","Somerset County"),
-            Edison("08837","Middlesex County"),
-            Franklin("08873","Somerset County"),
-            Piscataway("08854","Middlesex County"),
-            Somerville("08876","Somerset County");
+        Bridgewater("08807","Somerset County"),
+        Edison("08837","Middlesex County"),
+        Franklin("08873","Somerset County"),
+        Piscataway("08854","Middlesex County"),
+        Somerville("08876","Somerset County");
 
-            String zipcode;
-            String County;
-            Locations(String Z, String C){
-                zipcode=Z;
-                County=C;
+        String zipcode;
+        String County;
+        Locations(String Z, String C){
+            zipcode=Z;
+            County=C;
 
 
-            }
-            public String getCounty(Locations a){
-                return a.County;
-
-            }
         }
+        public String getCounty(Locations a){
+            return a.County;
+
+        }
+    }
+    public int contains(Member member) {
+        return find(member);
+    }
+    public Member getMember(int index){
+        return mlist[index];
+
+    }
+
+    public void printSchedule() {
+        for (int i = 0; i < size; i++) {
+            System.out.print("\t\t");
+            System.out.println(mlist[i].toString());
+        }
+    }
 
 
-    private Member [] mlist;
+    private Member[] mlist;
     private int size;
 
+    /**
+     This is the constructor for the database and the mlist array database is configured along with the size.
+     */
     public MemberDatabase(){
         this.size = size;
         this.mlist = new Member[4];
     }
+
+    /**
+     * Find the member if it is in the database by comparing the information of the passed member to all other members.
+     @param member The member which is trying to be found in the dadtabase.
+     @return the index of the member if it is found else return -1.
+     */
     private int find(Member member) {
         int NOT_FOUND = -1;
         for (int i = 0; i < mlist.length; i++) {
@@ -38,6 +68,9 @@ public class MemberDatabase {
         return NOT_FOUND;
     }
 
+    /**
+     * This method is for growing the mlist[] array to increase the size of the database in case it is full.
+     */
     private void grow() {
         Member[] newList = new Member[mlist.length+4];
         for(int i = 0; i < mlist.length; i++){
@@ -45,45 +78,57 @@ public class MemberDatabase {
         }
         mlist=newList;
     }
+
+    /**
+     * This adds a member based on whether the member exists in the database.
+     * If the member exists in the database then they are not added.
+     * If the member doesn't exist in the database then they are added.
+     @param member The member which is being added to the database
+     @return true if the member was added, false if the member was found in the database or not added
+     */
     public boolean add(Member member) {
-        if(find(member) == -1){
-            if(mlist[mlist.length-1] != null){
-                grow();
-            }
-            else{
-                for(int i = 0; i < mlist.length; i++){
-                    if(mlist[i] == null){
-                        mlist[i] = member;
-                        return true;
-                    }
-                }
-            }
-        }
-        else{
+        if(find(member) != -1){
             return false;
         }
-        return false;
+        if(size == mlist.length-1){
+            grow();
+        }
+        mlist[size] = member;
+        size++;
+        return true;
     }
+
+    /**
+     * This removes a member based on whether the member exists in the database.
+     * If the member exists in the database then they are removed.
+     * If the member doesn't exist in the database then nothing happens.
+     @param member The member which is being removed from the database
+     @return true if the member was removed, false if the member was not found or removed.
+     */
     public boolean remove(Member member) {
-        if(find(member) < 0){
+        if(find(member) == -1){
             return false;
         }
-        Member [] temp = new Member[size];
-        boolean found = true;
-        int indx = 0;
+        Member[]temp = new Member[size];
+        boolean found = false;
+        int memberIDX = 0;
         for(int i = 0; i < size; i++){
             if(mlist[i] != null && member.equals(mlist[i])){
                 found = true;
             }
             else{
-                temp[indx] = mlist[i];
-                indx++;
+                temp[memberIDX] = mlist[i];
+                memberIDX++;
             }
         }
+        size--;
         mlist = temp;
         return found;
     }
 
+    /**
+     * Prints all members in the database in whatever order the array is currently set at.
+     */
     public void print () {
         for(int i = 0; i < mlist.length; i++) {
             if(mlist[i] != null){
@@ -91,38 +136,72 @@ public class MemberDatabase {
             }
         }
     } //print the array contents as is
+
+
+    /**
+     * Prints the members by counties and orders them by those counties.
+     */
     public void printByCounty() {
-        //Sort The List
-        for(int i = 0; i < mlist.length; i++){
-            mlist[i].getLocation().getCounty(mlist[i].getLocation());
+        int increment = 1;
+        while (increment < size) {
+            increment = 2 * increment + 1;
         }
+        while (increment >= 1) {
+            for (int i = increment; i < size; i++) {
+                for (int j = i; j >= increment; j -= increment) {
+                    if (mlist[j].getLocation().getBoth().compareTo(mlist[j - increment].getLocation().getBoth()) < 0) {
+                        Member temp = mlist[j];
+                        mlist[j] = mlist[j - increment];
+                        mlist[j - increment] = temp;
+                    } else {
+                        break;
+                    }
+                }
+            }
+            increment /= 2;
+        }
+        print();
     } //sort by county and then zipcode
+
+
+    /**
+     * Prints all members in order of expiration date by coparing each date to each other and sorting it.
+     */
     public void printByExpirationDate() {
-        for(int i = 0; i< mlist.length; i++) {
-            for(int j = i+1; j < mlist.length; j++) {
-                if(mlist[i].getExpire().compareTo(mlist[j].getExpire()) == 0) {
-                    Member temp = mlist[i];
-                    mlist[i] = mlist[j];
-                    mlist[j] = temp;
-                }
+        for (int i = 1; i < this.size; i++) {
+            Member member = mlist[i];
+            int j = i - 1;
+            while (j >= 0 && mlist[j].getExpire().compareTo(member.getExpire()) == 1) {
+                mlist[j + 1] = mlist[j];
+                j--;
             }
+            mlist[j + 1] = member;
         }
-        for(int i = 0; i < mlist.length; i++){
-            System.out.println(mlist[i].toString());
-        }
+        print();
     }
+
+    /**
+     * This is a method which prints every member by it's name in alphabetical order.
+     * This goes in alphabetical order when printing.
+     */
     public void printByName() {
-        for(int i = 0; i < mlist.length; i++) {
-            for(int j = i+1; j < mlist.length; j++) {
-                if(mlist[i].compareTo(mlist[j]) > 0) {
-                    Member temp = mlist[i];
-                    mlist[i] = mlist[j];
-                    mlist[j] = temp;
-                }
+        for(int i = 0; i < size; i++){
+            Member member = mlist[i];
+            int j = i - 1;
+            while(j >= 0 && (mlist[j] != null && mlist[i] != null) && (mlist[j].getLname().compareTo(member.getLname())) > 0){
+                mlist[j + 1] = mlist[j];
+                j = j - 1;
             }
+            mlist[j + 1] = member;
         }
-        for(int i = 0; i < mlist.length; i++) {
-            System.out.println(mlist[i].toString());
-        }
+        print();
+    }
+
+    /**
+     This method is for returning the size of the database.
+     @return Returns the size of the current database.
+     */
+    public int getSizeOfDB() {
+        return size;
     }
 }
