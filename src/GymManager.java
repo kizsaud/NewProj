@@ -118,7 +118,7 @@ public class GymManager {
                 }
                 System.out.println(className + " class does not exist");
             } else {
-                System.out.println(fName + " " + lName + " " + dob.toString() + " is not in the database.");
+                System.out.println(fName + " " + lName + " is not in the database.");
             }
         }
         else if(command.equals("D")){
