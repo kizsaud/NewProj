@@ -26,7 +26,7 @@ public class Date implements Comparable<Date>{
         year=checkYear;
         month=checkMonth;
         day=checkDay;
-        }
+    }
 
 
 
@@ -180,8 +180,8 @@ public class Date implements Comparable<Date>{
      This method checks to see if the year that is passed is a leap year instead of checking this.date
      @param year the year which is being checked.
      */
-public boolean isLeap(int year){
-        
+    public boolean isLeap(int year){
+
         if (year % 4 == 0) {
 
             // if the year is century
@@ -258,12 +258,12 @@ public boolean isLeap(int year){
         }
 
 
-            else {
-                isAdult=false;
-            }
-
-            return isAdult;
+        else {
+            isAdult=false;
         }
+
+        return isAdult;
+    }
 
     /**
      This is a method for checking if the date is an adult, having a String passed foe date.
@@ -282,7 +282,7 @@ public boolean isLeap(int year){
         int day = A.getDay();
         int day2=checkDay;
         if (checkYear<Minyear){
-            
+
 
             isAdult=true;
         }
@@ -297,22 +297,22 @@ public boolean isLeap(int year){
                     isAdult=true;
                 }
             }
-        if(checkMonth<month){
+            if(checkMonth<month){
 
                 isAdult=true;
-                
-            }
-            
-            }
-        
 
-        
+            }
+
+        }
+
+
+
         else{
             isAdult=false;
         }
 
-return isAdult;
-            }
+        return isAdult;
+    }
 
 
 
@@ -341,21 +341,21 @@ return isAdult;
         }
         // For February.
         if(month == 2)
-        {    
+        {
 
-            
+
             if(day <= 28){
                 return true;
             }
             if(day == 29){
                 if(isLeap(year))
                     return true;
-                }
             }
-            return false;
-
-            
         }
+        return false;
+
+
+    }
 
     /**
      This method checks if the date is a valid date given multiple paramaeter of date.
@@ -381,15 +381,11 @@ return isAdult;
             if(day == 29){
                 if(isLeap(year))
                     return true;
-                }
             }
-            return false;
-
-            
         }
+        return false;
+
 
     }
- 
- 
-    
 
+}

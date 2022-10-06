@@ -1,5 +1,5 @@
 /**
-/Create a enumeration called time for 3 classes, PILATES, SPINNING, AND CARDIO, Each of these Enumerations
+ /Create a enumeration called time for 3 classes, PILATES, SPINNING, AND CARDIO, Each of these Enumerations
  have a dateTime field which pertains to the time of each class.
  @author Abhijeet Singh, Khizar Saud
  */

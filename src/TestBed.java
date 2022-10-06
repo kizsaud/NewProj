@@ -1,5 +1,4 @@
-public class MemberTest {
-
+public class TestBed {
 
     public static void main(String args[]){
         //Testing the date isValid() Method.
@@ -196,4 +195,5 @@ public class MemberTest {
 
 
     }
+
 }
