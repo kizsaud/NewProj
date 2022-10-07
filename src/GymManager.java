@@ -6,6 +6,8 @@
  @author Abhijeet Singh, Khizar Saud
  */
 
+import java.io.File;
+import java.io.FileNotFoundException;
 import java.util.Scanner;
 
 
@@ -54,7 +56,6 @@ public class GymManager {
                 System.out.println("Member already in database");
             }
         }
-
 
         else if (command.equals("R")) {
             Date date = new Date(commands[3]);
@@ -144,25 +145,43 @@ public class GymManager {
                 fitnessClasses[i].printSchedule();
             }
         }
-        else if(commands.equals("LS")){
+        else if(command.equals("LS")){
 
         }
-        else if(commands.equals("LM")){
+        else if(command.equals("LM")){
+            try{
+                File file = new File("C:\\Users\\abhij\\IdeaProjects\\GymSoftware\\src\\memberList.txt");
+                Scanner sc = new Scanner(file);
+                String newCommand = "";
+                String[] newCommands;
+                String user = "";
+                int ptr = 0;
+                while (sc.hasNext()) {
+                    newCommand = sc.nextLine();
+                    newCommands = newCommand.split("\\s+");
+                    addListMembers(newCommands);
+                }
+            }
+            catch (FileNotFoundException e){
+                System.out.println("File Not Found");
+            }
+        System.out.println("-list of members loaded-");
+        db.print();
+        System.out.println("-end of list-");
+        }
+        else if(command.equals("AF")){
 
         }
-        else if(commands.equals("AF")){
+        else if(command.equals("AP")){
 
         }
-        else if(commands.equals("AP")){
+        else if(command.equals("PF")){
 
         }
-        else if(commands.equals("PF")){
+        else if(command.equals("CG")){
 
         }
-        else if(commands.equals("CG")){
-
-        }
-        else if(commands.equals("DG")){
+        else if(command.equals("DG")){
 
         }
     }
@@ -174,6 +193,29 @@ public class GymManager {
      @param commands Gives the list of commands for whatever comes after Add command with name, dates, and location.
      @return true if the member was added, and false if the member wasn't added.
      */
+
+    public void addListMembers(String[] commands){
+        String location = commands[4];
+        Date exp = new Date(commands[3]);
+        Date dob = new Date(commands[2]);
+        if (dob.isValid() && dob.isAdult() && exp.isValid()) {
+            Member member = new Member();
+            member.setDob(dob);
+            member.setExpire(exp);
+            member.setFname(commands[0]);
+            member.setLname(commands[1]);
+
+            //Split location back to match enum location
+            String finalLocation1 = location.substring(1).toLowerCase();
+            String finalLocation2 = location.substring(0,1).toUpperCase();
+
+            //Put it back together here
+            location = finalLocation2 + finalLocation1;
+            member.setLocation(Location.valueOf(location));
+            db.add(member);
+        }
+    }
+
     public boolean addMemberToDatabase(String[] commands) {
         String location = commands[4];
         Date exp = new Date();
@@ -217,7 +259,8 @@ public class GymManager {
             location = finalLocation2 + finalLocation1;
             member.setLocation(Location.valueOf(location));
             return db.add(member);
-        } else {
+        }
+        else {
             if(dob.isAdult() == false){
                 System.out.println("DOB " + dob.getMonth() + "/" + dob.getDay() + "/" + dob.getYear() + ": must be 18 or older to join!");
             }
@@ -232,4 +275,9 @@ public class GymManager {
         }
 
     }
+
+    public void readAndRegisterMembers(){
+
+    }
+
 }
