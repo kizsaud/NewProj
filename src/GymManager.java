@@ -36,7 +36,7 @@ public class GymManager {
         int ptr = 0;
         while (scan.hasNext()) {
             command = scan.nextLine();
-            commands = command.split("\\s");
+            commands = command.split("\\s+");
             executeCommands(commands[0], commands);
         }
     }
@@ -170,10 +170,20 @@ public class GymManager {
         System.out.println("-end of list-");
         }
         else if(command.equals("AF")){
-
+            if (addFamilyMemberToDatabase(commands)) {
+                System.out.println("member added to database");
+            }
+            else{
+                System.out.println("Member already in database");
+            }
         }
         else if(command.equals("AP")){
-
+            if (addPremiumMemberToDatabase(commands)) {
+                System.out.println("member added to database");
+            }
+            else{
+                System.out.println("Member already in database");
+            }
         }
         else if(command.equals("PF")){
 
@@ -250,6 +260,126 @@ public class GymManager {
             member.setExpire(exp);
             member.setFname(commands[1]);
             member.setLname(commands[2]);
+
+
+            //Split location back to match enum location
+            String finalLocation1 = location.substring(1).toLowerCase();
+            String finalLocation2 = location.substring(0,1).toUpperCase();
+
+            //Put it back together here
+            location = finalLocation2 + finalLocation1;
+            member.setLocation(Location.valueOf(location));
+            return db.add(member);
+        }
+        else {
+            if(dob.isAdult() == false){
+                System.out.println("DOB " + dob.getMonth() + "/" + dob.getDay() + "/" + dob.getYear() + ": must be 18 or older to join!");
+            }
+            else if (dob.isValid() == false) {
+                System.out.println("DOB " + dob.getMonth() + "/" + dob.getDay() + "/" + dob.getYear() + ": invalid calender date!");
+            } else if (exp.isValid() == false) {
+                System.out.println("Expiration date " + exp.getMonth() + "/" + exp.getDay() + "/" + exp.getYear()  + ": invalid calender date!");
+            } else if (checkLocation == false) {
+                return false;
+            }
+            return false;
+        }
+
+    }
+
+    public boolean addFamilyMemberToDatabase(String[] commands) {
+        String location = commands[4];
+        Date exp = new Date();
+        exp.setMonth(exp.getMonth()+3);
+        if(exp.getMonth() > 12){
+            exp.setMonth(exp.getMonth()-12);
+            exp.setYear(exp.getYear()+1);
+        }
+        Date dob = new Date(commands[3]);
+        boolean checkLocation = true;
+        location = location.toUpperCase();
+        if (location.equals("EDISON")) {
+            checkLocation = true;
+        }
+        else if (location.equals("BRIDGEWATER")) {
+            checkLocation = true;
+        }
+        else if (location.equals("SOMERVILLE")) {
+            checkLocation = true;
+        }
+        else if (location.equals("PISCATAWAY")) {
+            checkLocation = true;
+        }
+        else if (location.equals("FRANKLIN")) {
+            checkLocation = true;
+        } else {
+            checkLocation = false;
+        }
+        if (dob.isValid() && dob.isAdult() && exp.isValid() && checkLocation == true) {
+            Family member = new Family();
+            member.setDob(dob);
+            member.setExpire(exp);
+            member.setFname(commands[1]);
+            member.setLname(commands[2]);
+            member.setGuestPass(1);
+
+
+            //Split location back to match enum location
+            String finalLocation1 = location.substring(1).toLowerCase();
+            String finalLocation2 = location.substring(0,1).toUpperCase();
+
+            //Put it back together here
+            location = finalLocation2 + finalLocation1;
+            member.setLocation(Location.valueOf(location));
+            return db.add(member);
+        }
+        else {
+            if(dob.isAdult() == false){
+                System.out.println("DOB " + dob.getMonth() + "/" + dob.getDay() + "/" + dob.getYear() + ": must be 18 or older to join!");
+            }
+            else if (dob.isValid() == false) {
+                System.out.println("DOB " + dob.getMonth() + "/" + dob.getDay() + "/" + dob.getYear() + ": invalid calender date!");
+            } else if (exp.isValid() == false) {
+                System.out.println("Expiration date " + exp.getMonth() + "/" + exp.getDay() + "/" + exp.getYear()  + ": invalid calender date!");
+            } else if (checkLocation == false) {
+                return false;
+            }
+            return false;
+        }
+
+    }
+
+    public boolean addPremiumMemberToDatabase(String[] commands) {
+        String location = commands[4];
+        Date exp = new Date();
+        exp.setYear(exp.getYear()+1);
+        Date dob = new Date(commands[3]);
+        boolean checkLocation = true;
+        location = location.toUpperCase();
+        if (location.equals("EDISON")) {
+            checkLocation = true;
+        }
+        else if (location.equals("BRIDGEWATER")) {
+            checkLocation = true;
+        }
+        else if (location.equals("SOMERVILLE")) {
+            checkLocation = true;
+        }
+        else if (location.equals("PISCATAWAY")) {
+            checkLocation = true;
+        }
+        else if (location.equals("FRANKLIN")) {
+            checkLocation = true;
+        } else {
+            checkLocation = false;
+        }
+        if (dob.isValid() && dob.isAdult() && exp.isValid() && checkLocation == true) {
+            Premium member = new Premium();
+            member.setDob(dob);
+            member.setExpire(exp);
+            member.setFname(commands[1]);
+            member.setLname(commands[2]);
+            member.setGuestPass(3);
 
             //Split location back to match enum location
             String finalLocation1 = location.substring(1).toLowerCase();

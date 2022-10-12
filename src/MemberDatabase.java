@@ -129,7 +129,7 @@ public class MemberDatabase {
     /**
      * Prints all members in the database in whatever order the array is currently set at.
      */
-    public void print () {
+    public void print() {
         for(int i = 0; i < mlist.length; i++) {
             if(mlist[i] != null){
                 System.out.println(mlist[i].toString());

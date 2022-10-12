@@ -1,20 +1,11 @@
-/**
- This is the member class which has the different attributes when it is passed from add.
- The attributes include, first name, last name, date of birth, expiration of memebership, and location of membership.
- This class also has an equals method as a way of comparing two members together.
- It includes different ways of also setting a member object.
- @author teammemberName1, teammemberName2
- */
+public class Premium extends Family{
 
-public class Member implements Comparable<Member>{
     private String fname;
     private String lname;
     private Date dob;
     private Date expire;
     private Location location;
-    public Member(){
-
-    }
+    private int guestPass;
 
     /**
      This is a constructor for the Member class being given all the necessary parameters as given in add command in
@@ -25,12 +16,16 @@ public class Member implements Comparable<Member>{
      @param expire the date of expiration of the member to make.
      @param location the location of memebership of the member to make
      */
-    public Member(String fname, String lname, Date dob, Date expire, Location location) {
+    public Premium(String fname, String lname, Date dob, Date expire, Location location, int guestPass) {
         this.fname = fname;
         this.lname = lname;
         this.dob = dob;
         this.expire = expire;
         this.location = location;
+        this.guestPass = guestPass;
+    }
+    public Premium(){
+
     }
 
     /**
@@ -39,7 +34,7 @@ public class Member implements Comparable<Member>{
      @param lname the last name of the person to make.
      @param dob the date of birth of the person to make.
      */
-    public Member(String fname, String lname, Date dob) {
+    public Premium(String fname, String lname, Date dob) {
         this.fname = fname;
         this.lname = lname;
         this.dob = dob;
@@ -50,7 +45,7 @@ public class Member implements Comparable<Member>{
      @param fname the name of the person to make.
      @param lname the last name of the person to make.
      */
-    public Member(String fname, String lname) {
+    public Premium(String fname, String lname) {
         this.fname = fname;
         this.lname = lname;
     }
@@ -141,6 +136,14 @@ public class Member implements Comparable<Member>{
         expire = d;
     }
 
+    public int getGuestPass(){
+        return guestPass;
+    }
+
+    public void setGuestPass(int pass){
+        guestPass = pass;
+    }
+
     /**
      This is the toString method which displayed all the information about the memeber in a string and allows
      for using it as a string.
@@ -150,16 +153,16 @@ public class Member implements Comparable<Member>{
     public String toString() {
         Date temp = new Date();
         if(this.getExpire().compareTo(temp) == 0 || this.getExpire().compareTo(temp) == -1){
-            return fname + " " + lname + ", DOB: " + dob.getMonth() + "/" + dob.getDay() + "/" + dob.getYear() + "," + " Membership expired: " + expire.getMonth() + "/" + expire.getDay() + "/" + expire.getYear() + ", Location: " + location;
+            return fname + " " + lname + ", DOB: " + dob.getMonth() + "/" + dob.getDay() + "/" + dob.getYear() + "," + " Membership expired: " + expire.getMonth() + "/" + expire.getDay() + "/" + expire.getYear() + ", Location: " + location + "(Premium) Guest-Pass Remaining: ";
         }
-        return fname + " " + lname + ", DOB: " + dob.getMonth() + "/" + dob.getDay() + "/" + dob.getYear() + "," + " Membership expires: " + expire.getMonth() + "/" + expire.getDay() + "/" + expire.getYear() + ", Location: " + location;
+        return fname + " " + lname + ", DOB: " + dob.getMonth() + "/" + dob.getDay() + "/" + dob.getYear() + "," + " Membership expires: " + expire.getMonth() + "/" + expire.getDay() + "/" + expire.getYear() + ", Location: " + location + "(Premium) Guest-Pass Remaining: ";
     }
     public String toStringCost() {
         Date temp = new Date();
         if(this.getExpire().compareTo(temp) == 0 || this.getExpire().compareTo(temp) == -1){
-            return fname + " " + lname + ", DOB: " + dob.getMonth() + "/" + dob.getDay() + "/" + dob.getYear() + "," + " Membership expired: " + expire.getMonth() + "/" + expire.getDay() + "/" + expire.getYear() + ", Location: " + location +  " Membership Fee: " + membershipFee();
+            return fname + " " + lname + ", DOB: " + dob.getMonth() + "/" + dob.getDay() + "/" + dob.getYear() + "," + " Membership expired: " + expire.getMonth() + "/" + expire.getDay() + "/" + expire.getYear() + ", Location: " + location + "(Premium) Guest-Pass Remaining: " + " Membership Fee: " + membershipFee();
         }
-        return fname + " " + lname + ", DOB: " + dob.getMonth() + "/" + dob.getDay() + "/" + dob.getYear() + "," + " Membership expires: " + expire.getMonth() + "/" + expire.getDay() + "/" + expire.getYear() + ", Location: " + location + " Membership Fee: " + membershipFee();
+        return fname + " " + lname + ", DOB: " + dob.getMonth() + "/" + dob.getDay() + "/" + dob.getYear() + "," + " Membership expires: " + expire.getMonth() + "/" + expire.getDay() + "/" + expire.getYear() + ", Location: " + location + "(Premium) Guest-Pass Remaining: " + " Membership Fee: " + membershipFee();
     }
 
     /**
@@ -168,12 +171,12 @@ public class Member implements Comparable<Member>{
      */
     @Override
     public boolean equals(Object obj) {
-        if (obj instanceof Member objMember) {
-            boolean isFNameSame = this.fname.equalsIgnoreCase(objMember.fname);
-            boolean isLNameSame = this.lname.equalsIgnoreCase(objMember.lname);
-            boolean isDobSame = this.getDob().getDay() == objMember.getDob().getDay() &&
-                    this.getDob().getMonth() == objMember.getDob().getMonth() &&
-                    this.getDob().getYear() == objMember.getDob().getYear();
+        if (obj instanceof Premium objPremium) {
+            boolean isFNameSame = this.fname.equalsIgnoreCase(objPremium.fname);
+            boolean isLNameSame = this.lname.equalsIgnoreCase(objPremium.lname);
+            boolean isDobSame = this.getDob().getDay() == objPremium.getDob().getDay() &&
+                    this.getDob().getMonth() == objPremium.getDob().getMonth() &&
+                    this.getDob().getYear() == objPremium.getDob().getYear();
             return isFNameSame && isLNameSame && isDobSame;
         }
         return false;
@@ -184,7 +187,7 @@ public class Member implements Comparable<Member>{
      @param member The object which is passed for comparing
      */
     @Override
-    public int compareTo(Member member)
+    public int compareTo(Premium member)
     {
         if(this.fname.equals(member.getFname()) && this.lname.equals(member.getLname()) && this.dob.compareTo(member.dob) == 0){
             return 0;
@@ -194,15 +197,9 @@ public class Member implements Comparable<Member>{
         }
 
     }
-
-    /**
-     * This method is to calculate the membership fees.
-     * @return returns the membership fees for the next billing period.
-     */
     public double membershipFee() {
-        double initialFee = 29.99;
-        double billingPeriod = 3.0;
-        double monthlyFee = 39.99;
-        return initialFee + (monthlyFee * billingPeriod);
+        double billingPeriod = 11.0;
+        double monthlyFee = 59.99;
+        return (monthlyFee * billingPeriod);
     }
 }
