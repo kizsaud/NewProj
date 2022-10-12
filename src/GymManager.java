@@ -49,8 +49,13 @@ public class GymManager {
      */
     public void executeCommands(String command, String[] commands) {
         if (command.equals("A")) {
+            String tempLocation = commands[commands.length-1];
+            tempLocation = tempLocation.toUpperCase();
             if (addMemberToDatabase(commands)) {
                 System.out.println("member added to database");
+            }
+            else if(!(tempLocation.equals("PISCATAWAY") || tempLocation.equals("BRIDGEWATER") || tempLocation.equals("SOMERVILLE") || tempLocation.equals("FRANKLIN") || tempLocation.equals("EDISON"))){
+                System.out.println("invalid location");
             }
             else{
                 System.out.println("Member already in database");
@@ -170,16 +175,26 @@ public class GymManager {
         System.out.println("-end of list-");
         }
         else if(command.equals("AF")){
+            String tempLocation = commands[commands.length-1];
+            tempLocation = tempLocation.toUpperCase();
             if (addFamilyMemberToDatabase(commands)) {
                 System.out.println("member added to database");
+            }
+            else if(!(tempLocation.equals("PISCATAWAY") || tempLocation.equals("BRIDGEWATER") || tempLocation.equals("SOMERVILLE") || tempLocation.equals("FRANKLIN") || tempLocation.equals("EDISON"))){
+                System.out.println("invalid location");
             }
             else{
                 System.out.println("Member already in database");
             }
         }
         else if(command.equals("AP")){
+            String tempLocation = commands[commands.length-1];
+            tempLocation = tempLocation.toUpperCase();
             if (addPremiumMemberToDatabase(commands)) {
                 System.out.println("member added to database");
+            }
+            else if(!(tempLocation.equals("PISCATAWAY") || tempLocation.equals("BRIDGEWATER") || tempLocation.equals("SOMERVILLE") || tempLocation.equals("FRANKLIN") || tempLocation.equals("EDISON"))){
+                System.out.println("invalid location");
             }
             else{
                 System.out.println("Member already in database");
