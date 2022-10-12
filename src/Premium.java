@@ -153,16 +153,16 @@ public class Premium extends Family{
     public String toString() {
         Date temp = new Date();
         if(this.getExpire().compareTo(temp) == 0 || this.getExpire().compareTo(temp) == -1){
-            return fname + " " + lname + ", DOB: " + dob.getMonth() + "/" + dob.getDay() + "/" + dob.getYear() + "," + " Membership expired: " + expire.getMonth() + "/" + expire.getDay() + "/" + expire.getYear() + ", Location: " + location + "(Premium) Guest-Pass Remaining: ";
+            return fname + " " + lname + ", DOB: " + dob.getMonth() + "/" + dob.getDay() + "/" + dob.getYear() + "," + " Membership expired: " + expire.getMonth() + "/" + expire.getDay() + "/" + expire.getYear() + ", Location: " + location + ", " + location.getZipcode(location) + ", " + location.getCounty(location).substring(0, location.getCounty(location).indexOf(" ")).toUpperCase() + ", (Premium) Guest-Pass Remaining: " + guestPass;
         }
-        return fname + " " + lname + ", DOB: " + dob.getMonth() + "/" + dob.getDay() + "/" + dob.getYear() + "," + " Membership expires: " + expire.getMonth() + "/" + expire.getDay() + "/" + expire.getYear() + ", Location: " + location + "(Premium) Guest-Pass Remaining: ";
+        return fname + " " + lname + ", DOB: " + dob.getMonth() + "/" + dob.getDay() + "/" + dob.getYear() + "," + " Membership expires: " + expire.getMonth() + "/" + expire.getDay() + "/" + expire.getYear() + ", Location: " + location + ", " + location.getZipcode(location) + ", " + location.getCounty(location).substring(0, location.getCounty(location).indexOf(" ")).toUpperCase() + ", (Premium) Guest-Pass Remaining: " + guestPass;
     }
     public String toStringCost() {
         Date temp = new Date();
         if(this.getExpire().compareTo(temp) == 0 || this.getExpire().compareTo(temp) == -1){
-            return fname + " " + lname + ", DOB: " + dob.getMonth() + "/" + dob.getDay() + "/" + dob.getYear() + "," + " Membership expired: " + expire.getMonth() + "/" + expire.getDay() + "/" + expire.getYear() + ", Location: " + location + "(Premium) Guest-Pass Remaining: " + " Membership Fee: " + membershipFee();
+            return fname + " " + lname + ", DOB: " + dob.getMonth() + "/" + dob.getDay() + "/" + dob.getYear() + "," + " Membership expired: " + expire.getMonth() + "/" + expire.getDay() + "/" + expire.getYear() + ", Location: " + location + ", " + location.getZipcode(location) + ", " + location.getCounty(location).substring(0, location.getCounty(location).indexOf(" ")).toUpperCase() + ", (Premium) Guest-Pass Remaining: " + guestPass + " Membership Fee: $" + membershipFee();
         }
-        return fname + " " + lname + ", DOB: " + dob.getMonth() + "/" + dob.getDay() + "/" + dob.getYear() + "," + " Membership expires: " + expire.getMonth() + "/" + expire.getDay() + "/" + expire.getYear() + ", Location: " + location + "(Premium) Guest-Pass Remaining: " + " Membership Fee: " + membershipFee();
+        return fname + " " + lname + ", DOB: " + dob.getMonth() + "/" + dob.getDay() + "/" + dob.getYear() + "," + " Membership expires: " + expire.getMonth() + "/" + expire.getDay() + "/" + expire.getYear() + ", Location: " + location + ", " + location.getZipcode(location) + ", " + location.getCounty(location).substring(0, location.getCounty(location).indexOf(" ")).toUpperCase() + ", (Premium) Guest-Pass Remaining: " + guestPass + " Membership Fee: $" + membershipFee();
     }
 
     /**
@@ -186,7 +186,6 @@ public class Premium extends Family{
      * This is a method which helps with seeing if the member is the same when being compared.
      @param member The object which is passed for comparing
      */
-    @Override
     public int compareTo(Premium member)
     {
         if(this.fname.equals(member.getFname()) && this.lname.equals(member.getLname()) && this.dob.compareTo(member.dob) == 0){

@@ -150,16 +150,16 @@ public class Member implements Comparable<Member>{
     public String toString() {
         Date temp = new Date();
         if(this.getExpire().compareTo(temp) == 0 || this.getExpire().compareTo(temp) == -1){
-            return fname + " " + lname + ", DOB: " + dob.getMonth() + "/" + dob.getDay() + "/" + dob.getYear() + "," + " Membership expired: " + expire.getMonth() + "/" + expire.getDay() + "/" + expire.getYear() + ", Location: " + location;
+            return fname + " " + lname + ", DOB: " + dob.getMonth() + "/" + dob.getDay() + "/" + dob.getYear() + "," + " Membership expired: " + expire.getMonth() + "/" + expire.getDay() + "/" + expire.getYear() + ", Location: " + location + ", " + location.getZipcode(location) + ", " + location.getCounty(location).substring(0, location.getCounty(location).indexOf(" ")).toUpperCase();
         }
-        return fname + " " + lname + ", DOB: " + dob.getMonth() + "/" + dob.getDay() + "/" + dob.getYear() + "," + " Membership expires: " + expire.getMonth() + "/" + expire.getDay() + "/" + expire.getYear() + ", Location: " + location;
+        return fname + " " + lname + ", DOB: " + dob.getMonth() + "/" + dob.getDay() + "/" + dob.getYear() + "," + " Membership expires: " + expire.getMonth() + "/" + expire.getDay() + "/" + expire.getYear() + ", Location: " + location + ", " + location.getZipcode(location) + ", " + location.getCounty(location).substring(0, location.getCounty(location).indexOf(" ")).toUpperCase();
     }
     public String toStringCost() {
         Date temp = new Date();
         if(this.getExpire().compareTo(temp) == 0 || this.getExpire().compareTo(temp) == -1){
-            return fname + " " + lname + ", DOB: " + dob.getMonth() + "/" + dob.getDay() + "/" + dob.getYear() + "," + " Membership expired: " + expire.getMonth() + "/" + expire.getDay() + "/" + expire.getYear() + ", Location: " + location +  " Membership Fee: " + membershipFee();
+            return fname + " " + lname + ", DOB: " + dob.getMonth() + "/" + dob.getDay() + "/" + dob.getYear() + "," + " Membership expired: " + expire.getMonth() + "/" + expire.getDay() + "/" + expire.getYear() + ", Location: " + location + ", " + location.getZipcode(location) + ", " + location.getCounty(location).substring(0, location.getCounty(location).indexOf(" ")).toUpperCase() +  ", Membership Fee: $" + membershipFee();
         }
-        return fname + " " + lname + ", DOB: " + dob.getMonth() + "/" + dob.getDay() + "/" + dob.getYear() + "," + " Membership expires: " + expire.getMonth() + "/" + expire.getDay() + "/" + expire.getYear() + ", Location: " + location + " Membership Fee: " + membershipFee();
+        return fname + " " + lname + ", DOB: " + dob.getMonth() + "/" + dob.getDay() + "/" + dob.getYear() + "," + " Membership expires: " + expire.getMonth() + "/" + expire.getDay() + "/" + expire.getYear() + ", Location: " + location + ", " + location.getZipcode(location) + ", " + location.getCounty(location).substring(0, location.getCounty(location).indexOf(" ")).toUpperCase() + ", Membership Fee: $" + membershipFee();
     }
 
     /**

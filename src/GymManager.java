@@ -186,7 +186,9 @@ public class GymManager {
             }
         }
         else if(command.equals("PF")){
-
+            System.out.println("-list of members with membership fees-");
+            db.printByFee();
+            System.out.println("-end of list-");
         }
         else if(command.equals("CG")){
 

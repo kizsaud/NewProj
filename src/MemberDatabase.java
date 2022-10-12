@@ -137,6 +137,13 @@ public class MemberDatabase {
         }
     } //print the array contents as is
 
+    public void printByFee() {
+        for(int i = 0; i < mlist.length; i++) {
+            if(mlist[i] != null){
+                System.out.println(mlist[i].toStringCost());
+            }
+        }
+    }
 
     /**
      * Prints the members by counties and orders them by those counties.
