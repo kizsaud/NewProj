@@ -8,6 +8,7 @@
 
 import java.io.File;
 import java.io.FileNotFoundException;
+import java.util.Locale;
 import java.util.Scanner;
 
 
@@ -15,7 +16,8 @@ public class GymManager {
     MemberDatabase db = new MemberDatabase();
     private final int finalIntClassSize=3;
     FitnessClass[] fitnessClasses = new FitnessClass[finalIntClassSize];
-    int classes = 3;
+    int classes = 4;
+    Family member = new Family();
     //FitnessClass[] fitnessClasses = new FitnessClass[classes];
 
 
@@ -28,6 +30,7 @@ public class GymManager {
         fitnessClasses[0] = new FitnessClass(db,"Jennifer","Pilates", Time.Pilates, fitnessClasses);
         fitnessClasses[1] = new FitnessClass(db,"Denise","Spinning", Time.Spinning, fitnessClasses);
         fitnessClasses[2] = new FitnessClass(db,"Kim","Cardio", Time.Cardio, fitnessClasses);
+        FitnessClass A = new FitnessClass(null, null, null, null, fitnessClasses);
         System.out.println("Gym Manager running...");
         Scanner scan = new Scanner(System.in);
         String command = "";
@@ -49,61 +52,50 @@ public class GymManager {
      */
     public void executeCommands(String command, String[] commands) {
         if (command.equals("A")) {
-            String tempLocation = commands[commands.length-1];
+            String tempLocation = commands[commands.length - 1];
             tempLocation = tempLocation.toUpperCase();
             if (addMemberToDatabase(commands)) {
                 System.out.println("member added to database");
-            }
-            else if(!(tempLocation.equals("PISCATAWAY") || tempLocation.equals("BRIDGEWATER") || tempLocation.equals("SOMERVILLE") || tempLocation.equals("FRANKLIN") || tempLocation.equals("EDISON"))){
+            } else if (!(tempLocation.equals("PISCATAWAY") || tempLocation.equals("BRIDGEWATER") || tempLocation.equals("SOMERVILLE") || tempLocation.equals("FRANKLIN") || tempLocation.equals("EDISON"))) {
                 System.out.println("invalid location");
-            }
-            else{
+            } else {
                 System.out.println("Member already in database");
             }
-        }
-
-        else if (command.equals("R")) {
+        } else if (command.equals("R")) {
             Date date = new Date(commands[3]);
             Member member = new Member();
             member.setFname(commands[1]);
             member.setLname(commands[2]);
             member.setDob(date);
-            if(db.remove(member) == true){
-                System.out.println(commands[1] + " " +commands[2] + " removed.");
-            }
-            else{
+            if (db.remove(member) == true) {
+                System.out.println(commands[1] + " " + commands[2] + " removed.");
+            } else {
                 System.out.println(commands[1] + " " + commands[2] + " doesn't exist.");
             }
-        }
-        else if (command.equals("P")) {
+        } else if (command.equals("P")) {
             System.out.println("-list of members-");
             db.print();
             System.out.println("-end of list-");
             System.out.println();
-        }
-        else if (command.equals("PC")) {
+        } else if (command.equals("PC")) {
             System.out.println("-list of members sorted by county and zipcode-");
             db.printByCounty();
             System.out.println("-end of list-");
             System.out.println();
-        }
-        else if (command.equals("PN")) {
+        } else if (command.equals("PN")) {
             System.out.println("-list of members sorted by last name, and first name-");
             db.printByName();
             System.out.println("-end of list-");
             System.out.println();
-        }
-        else if (command.equals("PD")) {
+        } else if (command.equals("PD")) {
             System.out.println("-list of members sorted by membership expiration date-");
             db.printByExpirationDate();
             System.out.println("-end of list-");
             System.out.println();
-        }
-        else if (command.equals("Q")) {
+        } else if (command.equals("Q")) {
             System.out.println("Gym Manager terminated.");
             System.exit(0);
-        }
-        else if(command.equals("C")){
+        } else if (command.equals("C")) {
             String fName = commands[2];
             String lName = commands[3];
             String className = commands[1];
@@ -126,8 +118,7 @@ public class GymManager {
             } else {
                 System.out.println(fName + " " + lName + " is not in the database.");
             }
-        }
-        else if(command.equals("D")){
+        } else if (command.equals("D")) {
             String fitnessClassName = commands[1];
             String firstName = commands[2];
             String lastName = commands[3];
@@ -143,18 +134,15 @@ public class GymManager {
                 }
             }
             System.out.println("class not exist");
-        }
-        else if(command.equals("S")){
+        } else if (command.equals("S")) {
             System.out.println("-Fitness classes-");
             for (int i = 0; i < fitnessClasses.length; i++) {
                 fitnessClasses[i].printSchedule();
             }
-        }
-        else if(command.equals("LS")){
+        } else if (command.equals("LS")) {
 
-        }
-        else if(command.equals("LM")){
-            try{
+        } else if (command.equals("LM")) {
+            try {
                 File file = new File("C:\\Users\\abhij\\IdeaProjects\\GymSoftware\\src\\memberList.txt");
                 Scanner sc = new Scanner(file);
                 String newCommand = "";
@@ -166,52 +154,125 @@ public class GymManager {
                     newCommands = newCommand.split("\\s+");
                     addListMembers(newCommands);
                 }
-            }
-            catch (FileNotFoundException e){
+            } catch (FileNotFoundException e) {
                 System.out.println("File Not Found");
             }
-        System.out.println("-list of members loaded-");
-        db.print();
-        System.out.println("-end of list-");
-        }
-        else if(command.equals("AF")){
-            String tempLocation = commands[commands.length-1];
+            System.out.println("-list of members loaded-");
+            db.print();
+            System.out.println("-end of list-");
+        } else if (command.equals("AF")) {
+            String tempLocation = commands[commands.length - 1];
             tempLocation = tempLocation.toUpperCase();
             if (addFamilyMemberToDatabase(commands)) {
                 System.out.println("member added to database");
-            }
-            else if(!(tempLocation.equals("PISCATAWAY") || tempLocation.equals("BRIDGEWATER") || tempLocation.equals("SOMERVILLE") || tempLocation.equals("FRANKLIN") || tempLocation.equals("EDISON"))){
+            } else if (!(tempLocation.equals("PISCATAWAY") || tempLocation.equals("BRIDGEWATER") || tempLocation.equals("SOMERVILLE") || tempLocation.equals("FRANKLIN") || tempLocation.equals("EDISON"))) {
                 System.out.println("invalid location");
-            }
-            else{
+            } else {
                 System.out.println("Member already in database");
             }
-        }
-        else if(command.equals("AP")){
-            String tempLocation = commands[commands.length-1];
+        } else if (command.equals("AP")) {
+            String tempLocation = commands[commands.length - 1];
             tempLocation = tempLocation.toUpperCase();
             if (addPremiumMemberToDatabase(commands)) {
                 System.out.println("member added to database");
-            }
-            else if(!(tempLocation.equals("PISCATAWAY") || tempLocation.equals("BRIDGEWATER") || tempLocation.equals("SOMERVILLE") || tempLocation.equals("FRANKLIN") || tempLocation.equals("EDISON"))){
+            } else if (!(tempLocation.equals("PISCATAWAY") || tempLocation.equals("BRIDGEWATER") || tempLocation.equals("SOMERVILLE") || tempLocation.equals("FRANKLIN") || tempLocation.equals("EDISON"))) {
                 System.out.println("invalid location");
-            }
-            else{
+            } else {
                 System.out.println("Member already in database");
             }
-        }
-        else if(command.equals("PF")){
+        } else if (command.equals("PF")) {
             System.out.println("-list of members with membership fees-");
             db.printByFee();
             System.out.println("-end of list-");
-        }
-        else if(command.equals("CG")){
+        } else if (command.equals("CG")|| command.equals("DG")) {
+            //CG command, family guest check-in for a fitness class; must keep track of the remaining number of guest passes.
+            //CG CLASSNAME GUESTNAME LOCATION FNAME LASTNAME DOB
 
-        }
-        else if(command.equals("DG")){
+            //We set the variables respective to user entry.
+            String className = commands[1];
+            String InstructorName = commands[2];
+            String gLocation = commands[3].toUpperCase();
+            String mFName = commands[4];
+            // System.out.println(mFName);
+            String mLName = commands[5];
+            Date dob = new Date(commands[6]);
+            FitnessClass tempFitness;
+            Location guestLocation = null;
+            String location="";
+            int numOfPass = 0;
+            if (!dob.isValid()) {
+                return;
+            } else {
+                Member tempMember = new Member(mFName, mLName, dob);
+                //If it cannot find a index obviously ooes not exist.
+                if (db.contains(tempMember) >= 0) {
+                    int tempVal = db.contains(tempMember);
+                    tempMember = db.getMember(tempVal);
+                 //   System.out.println("AFTER");
+                    System.out.println(tempMember.getFname());
+
+                } else {
+                    System.out.println(mFName + " " + mLName + " " + "Does not exist in database");
+                }
+                if (gLocation.equals("BRIDGEWATER") || gLocation.equals("EDISON") || gLocation.equals("FRANKLIN") || gLocation.equals("SOMERVILLE") || gLocation.equals("PISCATAWAY")) {
+                    String finalLocation1 = gLocation.substring(1).toLowerCase();
+                    String finalLocation2 = gLocation.substring(0, 1).toUpperCase();
+
+                    //Put it back together here
+                    location = finalLocation2 + finalLocation1;
+
+                } else {
+                    System.out.println("location doesnt exsit");
+                }
+
+
+                FitnessClass A = new FitnessClass(db, InstructorName, className, null, fitnessClasses);
+
+                A.setLocation(Location.valueOf(location));
+                //System.out.println("HEY BITCH "+ location);
+                if(command.equals("CG")){
+                String Cname = A.getFitnessName();
+                String CInstructor = A.getInstructorName();
+                int count = 0;
+                for (int i = 0; i < fitnessClasses.length; i++) {
+                    if (fitnessClasses[i].getFitnessName().equalsIgnoreCase(Cname) && fitnessClasses[i].getInstructorName().equalsIgnoreCase(CInstructor))
+                        //System.out.println("Class exists!");
+                    count += 1;
+                }
+                if (count > 0) {
+                    //  System.out.println("Count chek");
+                    if (tempMember instanceof Family) {
+                        numOfPass = ((Family) tempMember).getNumOfGuestPass();
+                        if (numOfPass == 0) {
+                            System.out.println("NO PASSES! left");
+                        } else {
+                            if (tempMember.getLocation().compareLocations(A.getLocation()) == "Equal") {
+                                ((Family) tempMember).setNumOfGuestPass(-1);
+                                A.addGuest(tempMember);
+                                System.out.println(tempMember.getFname() + " " + tempMember.getLname() + " (guest) checked in " + A.toString());
+
+                            } else {
+                                System.out.println("Guest Location restriction");
+                            }
+                        }
+                    } else {System.out.println("User only has a standard membership - guest check-in is not allowed.");
+
+                    }
+                }
+
+                }
+                if(command.equals("DG")){
+                    A.dropGuest(tempMember);
+                }
+
+
+            }
 
         }
     }
+
+
+
 
     /**
      This is a helper method for adding a member to the member database.
@@ -220,6 +281,13 @@ public class GymManager {
      @param commands Gives the list of commands for whatever comes after Add command with name, dates, and location.
      @return true if the member was added, and false if the member wasn't added.
      */
+    public void cgMethod(String [] commands){
+        String cName = commands[0];
+        Date dob = new Date(commands[6]);
+        String gName= commands[2];
+
+
+    }
 
     public void addListMembers(String[] commands){
         String location = commands[4];
@@ -338,7 +406,6 @@ public class GymManager {
             member.setExpire(exp);
             member.setFname(commands[1]);
             member.setLname(commands[2]);
-            member.setGuestPass(1);
 
 
             //Split location back to match enum location
@@ -396,7 +463,6 @@ public class GymManager {
             member.setExpire(exp);
             member.setFname(commands[1]);
             member.setLname(commands[2]);
-            member.setGuestPass(3);
 
             //Split location back to match enum location
             String finalLocation1 = location.substring(1).toLowerCase();

@@ -1,3 +1,5 @@
+import java.util.ArrayList;
+
 /**
  This is the Fitness Class for all the fitness classes to check in or drop.
  This class is mainly for tracking which members have been added to the current class choosing from Pilates, Spinning and Cardio.
@@ -12,7 +14,8 @@ public class FitnessClass {
     private final MemberDatabase attending = new MemberDatabase();
     private MemberDatabase memberDb;
     private FitnessClass[] fitnessClasses;
-
+    private ArrayList<Member> guest = new ArrayList<>();
+    private Location location;
     /**
      FitnessClass Constructor. Decalres an object of type FitnessClass.
      @param fitnessClassName name of the class
@@ -29,16 +32,55 @@ public class FitnessClass {
         this.fitnessClasses=fitnessClasses;
 
 
+
+
     }
+    public FitnessClass(MemberDatabase mbdb, String instructorName, String fitnessClassName, Time classTime, Location location){
+        this.fitnessClassName=fitnessClassName;
+        this.instructorName=instructorName;
+        this.classTime = classTime;
+        this.memberDb=mbdb;
+        this.fitnessClasses=fitnessClasses;
+        this.location=location;
+
+
+
+    }
+
     /**
      This checks to see if the member is registered into the class
      @param member the name of the member that is being checked for registration.
      @return true if member is attending, false otherwise.
      */
+    public Location getLocation() {
+        return location;
+    }
+    public void setLocation(Location location){
+        this.location=location;
+
+    }
     public boolean isSignedUp(Member member) {
         return attending.contains(member) != notFoundResult;
     }
+    public void addGuest(Member member){
+        guest.add(member);
+    }
+    //drop guest will be useful in multiple instances , if the passed member is a instance of family set the guest pass to 1 after dropping.
+    public void dropGuest(Member member){
+        guest.remove(member);
+        System.out.println("Member: "+ member.getFname()+ " "+member.getLname() + " has been checked out");
 
+        if(member instanceof Family){
+            ((Family) member).setNumOfGuestPass(1);
+
+
+
+
+        }
+    }
+    public String getInstructorName(){
+        return instructorName;
+    }
 
     /**
      @return a list of who is attending classes.
@@ -172,6 +214,11 @@ public class FitnessClass {
         }
 
 
+    }
+    @Override
+    public String toString() {
+        return fitnessClassName.toUpperCase() + " - " + instructorName.toUpperCase()  +
+                ", " + location;
     }
 
 

@@ -5,6 +5,8 @@
  */
 
 
+import java.util.Locale;
+
 /**
  This is an enum class for having all the information about cities and their zipcodes and county's stored.
  */
@@ -29,12 +31,36 @@ public enum Location {
 
 
     }
+    public String compareLocations(Location location){
+        String localCounty=(this.getCounty()).toUpperCase(Locale.ROOT);
+        String passedCounty=(location.getCounty()).toUpperCase(Locale.ROOT);
+        int localZip=Integer.parseInt(this.getZipcode());
+        int passedZip=Integer.parseInt(location.getZipcode());
+        String winner="";
+        if(localCounty.compareTo(passedCounty)==0){
+            if(localZip>passedZip){
+                winner="First";
+            }
+            else if(localZip<passedZip){
+                winner="Second";
+            }else{
+                winner="Equal";
+            }
+
+        }
+        return  winner;
+
+    }
+
 
     /**
      Returns the Zipcode of a given location.
      @param a is the location to get the zipcode of.
      @return String of the zipcode.
      */
+    public String getZipcode(){
+        return this.zipcode;
+    }
     public String getZipcode(Location a){
         return a.zipcode;
     }
@@ -47,6 +73,10 @@ public enum Location {
     public String getCounty(Location a) {
         return a.County;
     }
+    public String getCounty(){
+        return this.County;
+    }
+
     public String getBoth() {
         return County + zipcode;
     }
