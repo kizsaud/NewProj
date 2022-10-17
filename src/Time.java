@@ -9,6 +9,7 @@ public enum Time {
     Spinning("14:00"),
     Cardio("14:00");
 
+
     private final String dateTime;
 
     /**

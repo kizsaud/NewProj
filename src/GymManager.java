@@ -14,11 +14,11 @@ import java.util.Scanner;
 
 public class GymManager {
     MemberDatabase db = new MemberDatabase();
-    private final int finalIntClassSize=3;
+    private final int finalIntClassSize=16;
     FitnessClass[] fitnessClasses = new FitnessClass[finalIntClassSize];
     int classes = 4;
     Family member = new Family();
-    //FitnessClass[] fitnessClasses = new FitnessClass[classes];
+    ClassSchedule c = new ClassSchedule();
 
 
     /**
@@ -26,7 +26,7 @@ public class GymManager {
      This makes and stores all the fitness classes.
      This method also collects all the parts of a command and sends it out to an execute command class.
      */
-    public void run() {
+    public void run() throws FileNotFoundException {
         fitnessClasses[0] = new FitnessClass(db,"Jennifer","Pilates", Time.Pilates, fitnessClasses);
         fitnessClasses[1] = new FitnessClass(db,"Denise","Spinning", Time.Spinning, fitnessClasses);
         fitnessClasses[2] = new FitnessClass(db,"Kim","Cardio", Time.Cardio, fitnessClasses);
@@ -50,7 +50,7 @@ public class GymManager {
      @param command This is the command to take care of the first letter command.
      @param commands This is to store the rest of the input if there is any, for inforamtion about member for add/remove
      */
-    public void executeCommands(String command, String[] commands) {
+    public void executeCommands(String command, String[] commands) throws FileNotFoundException {
         if (command.equals("A")) {
             String tempLocation = commands[commands.length - 1];
             tempLocation = tempLocation.toUpperCase();
@@ -95,29 +95,7 @@ public class GymManager {
         } else if (command.equals("Q")) {
             System.out.println("Gym Manager terminated.");
             System.exit(0);
-        } else if (command.equals("C")) {
-            String fName = commands[2];
-            String lName = commands[3];
-            String className = commands[1];
-            Date dob = new Date(commands[4]);
 
-            Member member = new Member();
-            member.setDob(dob);
-            member.setFname(fName);
-            member.setLname(lName);
-
-            if (db.contains(member) != -1) {
-                member = db.getMember(db.contains(member));
-                for (int i = 0; i < fitnessClasses.length; i++) {
-                    if ((fitnessClasses[i].getFitnessName()).equalsIgnoreCase(className)) {
-                        fitnessClasses[i].checkIn(member, db, className, fitnessClasses);
-                        return;
-                    }
-                }
-                System.out.println(className + " class does not exist");
-            } else {
-                System.out.println(fName + " " + lName + " is not in the database.");
-            }
         } else if (command.equals("D")) {
             String fitnessClassName = commands[1];
             String firstName = commands[2];
@@ -140,8 +118,65 @@ public class GymManager {
                 fitnessClasses[i].printSchedule();
             }
         } else if (command.equals("LS")) {
+            String fileName= "classSchedule.txt";
+            String [] userLines;
 
-        } else if (command.equals("LM")) {
+
+            File inputFile = new File("C:\\Users\\kizsa\\Desktop\\GymSoftware\\src\\classSchedule.txt");
+            try {
+
+                Scanner sc = new Scanner(inputFile);
+                String line;
+                int countNumOfLine = 0;
+                while (sc.hasNextLine()) {
+                    line = sc.nextLine();
+                    if (line == null || line.length() == 0) {
+                        break;
+                    }
+                    countNumOfLine++;
+                }
+                String lines[] = new String[countNumOfLine + 1];
+                lines[0] = Integer.toString(countNumOfLine);
+                sc = new Scanner(inputFile);
+                for (int i = 1; i < lines.length; i++) {
+                    lines[i] = sc.nextLine();
+                }
+                userLines=lines;
+
+            } catch (FileNotFoundException e) {
+                throw new RuntimeException(e);
+            }
+            FitnessClass[] kkk = new FitnessClass[Integer.parseInt(userLines[0])];
+            int index = 1;
+            for (int i = 1; i < userLines.length-1; i++) {
+                String cmdLine = userLines[i];
+                String[] infos = cmdLine.split("\\s");
+                String location = infos[3].toUpperCase();
+                classTimes classTime = classTimes.valueOf(infos[2].toUpperCase());
+                Location classLocation = Location.valueOf(infos[3].toUpperCase());
+                boolean flag = false;
+
+
+                if (flag==false) {
+                    FitnessClass fitnessClass = new FitnessClass(infos[0], infos[1],
+                            classTime, classLocation);
+                    kkk[index++] = fitnessClass;
+                }
+            }
+            c = new ClassSchedule(kkk, kkk.length);
+            c.printClassSchedule();
+
+        }
+
+
+
+
+
+
+
+
+
+        else if (command.equals("LM")) {
             try {
                 File file = new File("C:\\Users\\abhij\\IdeaProjects\\GymSoftware\\src\\memberList.txt");
                 Scanner sc = new Scanner(file);
@@ -184,7 +219,7 @@ public class GymManager {
             System.out.println("-list of members with membership fees-");
             db.printByFee();
             System.out.println("-end of list-");
-        } else if (command.equals("CG")|| command.equals("DG")) {
+        } else if (command.equals("CG")|| command.equals("DG")|| command.equals("C")) {
             //CG command, family guest check-in for a fitness class; must keep track of the remaining number of guest passes.
             //CG CLASSNAME GUESTNAME LOCATION FNAME LASTNAME DOB
 
@@ -204,12 +239,13 @@ public class GymManager {
                 return;
             } else {
                 Member tempMember = new Member(mFName, mLName, dob);
+                tempMember.setDob(dob);
                 //If it cannot find a index obviously ooes not exist.
                 if (db.contains(tempMember) >= 0) {
                     int tempVal = db.contains(tempMember);
                     tempMember = db.getMember(tempVal);
                  //   System.out.println("AFTER");
-                    System.out.println(tempMember.getFname());
+                    //System.out.println(tempMember.getFname());
 
                 } else {
                     System.out.println(mFName + " " + mLName + " " + "Does not exist in database");
@@ -263,6 +299,25 @@ public class GymManager {
                 }
                 if(command.equals("DG")){
                     A.dropGuest(tempMember);
+                }
+                if(command.equals("C")){
+
+
+                        if (db.contains(tempMember) != -1) {
+
+                            tempMember = db.getMember(db.contains(tempMember));
+                            for (int i = 0; i < fitnessClasses.length; i++) {
+                                if ((fitnessClasses[i].getFitnessName()).equalsIgnoreCase(className)) {
+                                        fitnessClasses[i].checkIn(tempMember, db, className, A);
+                                    System.out.println("HERE");
+
+                                    return;
+                                }
+                            }
+                            System.out.println(className + " class does not exist");
+                        } else {
+                            System.out.println(tempMember.getFname() + " " + tempMember.getLname() + " is not in the database.");
+                        }
                 }
 
 

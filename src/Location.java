@@ -1,8 +1,10 @@
+import java.util.Locale;
+
 /**
  First, a single, very descriptive sentence describing the class.
  Then, a couple more sentences of description to elaborate.
  @author Abhijeet Singh, Khizar Saud
- */
+ *
 
 
 import java.util.Locale;
@@ -11,11 +13,11 @@ import java.util.Locale;
  This is an enum class for having all the information about cities and their zipcodes and county's stored.
  */
 public enum Location {
-    Bridgewater("08807", "Somerset County"),
-    Edison("08837", "Middlesex County"),
-    Franklin("08873", "Somerset County"),
-    Piscataway("08854", "Middlesex County"),
-    Somerville("08876", "Somerset County");
+    BRIDGEWATER("08807", "Somerset County"),
+    EDISON("08837", "Middlesex County"),
+    FRANKLIN("08873", "Somerset County"),
+    PISCATAWAY("08854", "Middlesex County"),
+    SOMERVILLE("08876", "Somerset County");
 
     String zipcode;
     String County;

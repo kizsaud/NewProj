@@ -16,6 +16,7 @@ public class FitnessClass {
     private FitnessClass[] fitnessClasses;
     private ArrayList<Member> guest = new ArrayList<>();
     private Location location;
+    private classTimes classTimes;
     /**
      FitnessClass Constructor. Decalres an object of type FitnessClass.
      @param fitnessClassName name of the class
@@ -46,6 +47,15 @@ public class FitnessClass {
 
 
     }
+    //FitnessClass fitnessClass = new FitnessClass(infos[0], infos[1],
+    //                            classTime, classLocation);
+    public FitnessClass(String fitnessClassName, String instructorName, classTimes classTime, Location location) {
+        this.fitnessClassName = fitnessClassName;
+        this.instructorName = instructorName;
+        this.classTimes = classTime;
+        this.location = location;
+    }
+
 
     /**
      This checks to see if the member is registered into the class
@@ -191,29 +201,40 @@ public class FitnessClass {
      @param fitnessClasses the array of fitness classes to check into.
      @param memberDb For checking if the member is in the database.
      */
-    public void checkIn(Member member, MemberDatabase memberDb, String className, FitnessClass[] fitnessClasses) {
-        if(member.getDob().isAdult()){
-            if(!isSignedUp(member)){
-                if(!checkExpiration(member)){
+    public void checkIn(Member member, MemberDatabase memberDb, String className, FitnessClass Fitness) {
+
+
+        if (member.getDob().isAdult()) {
+            if (!isSignedUp(member)) {
+                if (!checkExpiration(member)) {
                     if (!isTimeConflict(className, fitnessClasses, member)) {
-                        System.out.println(member.getFname() + " " + member.getLname() + " checked in " + className);
-                        attending.add(member);
-                    }else{
-                        System.out.println(className + " time conflict -- " +member.getFname() + " " + member.getLname() + " has already checked in " + className);
+                        if (member instanceof Family) {
+                            System.out.println(member.getFname() + " " + member.getLname() + " checked in " + className);
+                            attending.add(member);
+                        } else {
+                            if (member.getLocation().compareLocations(Fitness.getLocation()) == "Equal") {
+                                attending.add(member);
+                                System.out.println(member.getFname() + " " + member.getLname() + " checked in " + attending.toString());
+
+                                attending.printSchedule();
+                            } else {
+                                System.out.println(className + " time conflict -- " + member.getFname() + " " + member.getLname() + " has already checked in " + className);
+
+                            }
+
+                        }
+                    } else {
+                        System.out.println(member.getFname() + " " + member.getLname() + " has already checked in " + className);
 
                     }
+                } else {
+                    System.out.println(member.getFname() + " " + member.getLname() + " " + member.getDob().toString() + " membership has expired.");
 
                 }
-            }else{
-                System.out.println(member.getFname() + " " + member.getLname() + " has already checked in " + className);
+
 
             }
-        }else {
-            System.out.println(member.getFname() + " " + member.getLname() + " " + member.getDob().toString() + " membership has expired.");
-
         }
-
-
     }
     @Override
     public String toString() {
